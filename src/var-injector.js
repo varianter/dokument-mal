@@ -1,12 +1,10 @@
-var templateRegex = /\[([A-Z]+)?\[([^\|]+)\|([^\]]+)\]([a-zA-Z0-9_]+)?\]/gm;
-var ce = document.createElement.bind(document);
-var sel = document.querySelector.bind(document);
-var sela = document.querySelectorAll.bind(document);
+const ce = document.createElement.bind(document);
+const sel = document.querySelector.bind(document);
+const sela = document.querySelectorAll.bind(document);
 
-var modifiers = {
+const modifiers = {
   formatDate(i) {
-    console.log(i);
-    var options = {
+    const options = {
       year: "numeric",
       month: "long",
       day: "numeric"
@@ -18,59 +16,40 @@ var modifiers = {
   }
 };
 
+class Field extends HTMLElement {
+  constructor() {
+    super();
+  }
+}
+customElements.define("v-field", Field);
+
 window.addEventListener("load", function() {
-  var main = sel("main");
-  var content = main.innerHTML;
-  var fields = getFields(content);
-  main.innerHTML = replaceFieldsWithContainers(content, fields);
-  var form = constructForm(fields);
+  const main = sel("main");
+  const fields = getFields(main);
+  const form = constructForm(fields);
   document.body.insertBefore(form, main);
 });
 
-////
-/// Parsing.
-///
-function getFields(content) {
-  var data;
-  var result = [];
-  do {
-    data = templateRegex.exec(content);
-    if (!data) continue;
-    result.push(toObject(data));
-  } while (data);
-
-  return unique(result);
+function getFields(selector) {
+  return Array.from(sela("v-field"));
 }
-
-function replaceFieldsWithContainers(content, fields) {
-  return content.replace(templateRegex, wrapContainer);
-}
-
-////
-/// HTMLElement creation.
-///
-function wrapContainer() {
-  var obj = toObject(arguments);
-  var container = ce("span");
-  container.className = "js-" + obj.slug;
-  container.setAttribute("data-modifier", obj.modifier);
-  container.textContent = modifiers[obj.modifier](obj.defaultValue);
-  return container.outerHTML;
+function getFieldsOfType(selector) {
+  return Array.from(sela(`v-field[title='${selector}']`));
 }
 
 function updateValue(field, value) {
-  var els = sela(".js-" + field.slug);
-  arrify(els).forEach(function(el) {
-    var modifier = el.getAttribute("data-modifier");
-    el.textContent = modifiers[modifier](value);
+  const title = field.getAttribute("title");
+  getFieldsOfType(title).forEach(function(el) {
+    const formatter = getFormatter(el.getAttribute("format"));
+    el.textContent = formatter(value);
   });
 }
 
 function constructForm(fields) {
-  var form = ce("form");
-  var ul = ce("ul");
+  const form = ce("form");
+  const ul = ce("ul");
 
-  fields
+  unique(fields)
     .map(createConstructInputLi(updateValue))
     .forEach(ul.appendChild.bind(ul));
 
@@ -81,23 +60,27 @@ function constructForm(fields) {
 
 function createConstructInputLi(cb) {
   return function(field) {
-    var label = ce("label");
-    label.setAttribute("for", "input-" + field.slug);
-    label.textContent = field.field;
+    const label = ce("label");
+    const title = field.getAttribute("title");
+    const slug = slugify(title);
+    const id = "input-" + slug;
 
-    var input = ce("input");
-    input.name = field.slug;
-    input.id = field.slug;
-    input.type = field.type;
-    input.value = field.defaultValue;
+    label.setAttribute("for", id);
+    label.textContent = title;
+
+    const input = ce("input");
+    input.name = id;
+    input.id = id;
+    input.type = field.getAttribute("type");
+    input.value = field.textContent;
     input.required = true;
 
-    var li = ce("li");
+    const li = ce("li");
     li.appendChild(label);
     li.appendChild(input);
 
     input.addEventListener("input", function(e) {
-      var val = e.currentTarget.value;
+      const val = e.currentTarget.value;
       cb(field, val);
     });
 
@@ -105,36 +88,18 @@ function createConstructInputLi(cb) {
   };
 }
 
-////
-/// Helper utils.
-///
-function toObject(data) {
-  var modifier = modifiers[data[4]] ? data[4] : "identity";
-  return {
-    field: data[2].trim(),
-    defaultValue: data[3].trim(),
-    type: (data[1] || "TEXT").toLocaleLowerCase(),
-    slug: slugify(data[2]),
-    modifier: modifier
-  };
+function getFormatter(name) {
+  const modifierName = modifiers[name] ? name : "identity";
+  return modifiers[modifierName];
 }
 
 function unique(fields) {
-  var visited = [];
+  const visited = [];
   return fields.reduce(function(acc, item) {
-    if (includes(visited, item.field)) return acc;
-    visited.push(item.field);
+    if (visited.includes(item.getAttribute("title"))) return acc;
+    visited.push(item.getAttribute("title"));
     return acc.concat(item);
   }, []);
-}
-
-function includes(arr, item) {
-  // Avoid Array.includes due to support.
-  return arr.indexOf(item) !== -1;
-}
-
-function arrify(arrayLike) {
-  return [].slice.call(arrayLike);
 }
 
 function slugify(str) {
