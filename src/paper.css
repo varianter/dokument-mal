@@ -49,7 +49,7 @@ ul,
 ol {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  list-style-position: outside;
+  list-style-position: inside;
   padding: 0;
 }
 ul li,
@@ -313,7 +313,7 @@ section:after {
   pre,
   blockquote {
     border: 1px solid #999;
-    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   /*
@@ -346,8 +346,11 @@ section:after {
   }
 
   h2,
-  h3 {
+  h3,
+  h4,
+  h5 {
     page-break-after: avoid;
+    page-break-inside: avoid;
   }
 
   form {
