@@ -1,0 +1,290 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600");
+
+:root {
+  --font-size-min: 14;
+  --font-size-max: 20;
+  --viewport-min: 400;
+  --viewport-max: 1200;
+
+  --type-scale: 1.2;
+
+  --type-scale-0: calc(var(--type-scale) * 1rem);
+  --type-scale-1: calc(var(--type-scale) * var(--type-scale-0));
+  --type-scale-2: calc(var(--type-scale) * var(--type-scale-1));
+  --type-scale-3: calc(var(--type-scale) * var(--type-scale-2));
+  --type-scale-4: calc(var(--type-scale) * var(--type-scale-3));
+  --type-scale-5: calc(var(--type-scale) * var(--type-scale-4));
+
+  --color-purple: #6200ee;
+}
+
+html {
+  font-family: "IBM Plex Sans", serif;
+  /* font-size: 137.5%; */
+  font-size: calc(
+    (var(--font-size-min) * 1px) + (var(--font-size-max) - var(--font-size-min)) *
+      (
+        (100vw - (var(--viewport-min) * 1px)) /
+          (var(--viewport-max) - var(--viewport-min))
+      )
+  );
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  letter-spacing: -0.015em;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+/* Copy & Lists */
+
+/* p + p {
+  margin-top: 0.5rem;
+} */
+
+ul,
+ol {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  list-style-position: outside;
+  padding: 0;
+}
+ul li,
+ol li {
+  line-height: 1.5rem;
+}
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+blockquote {
+  line-height: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  margin-top: 0.25em;
+  margin-bottom: 0;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: var(--type-scale-2);
+}
+h2 {
+  font-size: var(--type-scale-3);
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  font-size: var(--type-scale-1);
+}
+
+h4 {
+  font-size: var(--type-scale-1);
+}
+
+h5 {
+  font-size: var(--type-scale-1);
+}
+
+h6 {
+  font-size: var(--type-scale-0);
+}
+
+p {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  max-width: 55ch;
+}
+
+* + * {
+  margin-top: 0.75em;
+}
+* + p {
+  margin-top: 0.25em;
+}
+
+p + p:before {
+  content: "";
+  display: inline-block;
+  width: 1rem;
+}
+
+/* Tables */
+table {
+  margin-top: 1.5rem;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+table td,
+table th {
+  padding: 0;
+  line-height: 33px;
+}
+/* Code blocks */
+code {
+  vertical-align: bottom;
+}
+/* Leading paragraph text */
+.lead {
+  font-size: 1.414rem;
+}
+/* Hug the block above you */
+.hug {
+  margin-top: 0;
+}
+
+article {
+  max-width: 50rem;
+  padding: 3rem 7rem;
+  box-shadow: 0px 0.5em 1em 4px rgba(155, 155, 155, 0.2);
+  margin: 4em auto;
+  counter-reset: h2;
+}
+
+a {
+  color: var(--color-purple, currentColor);
+  font-weight: bold;
+  text-decoration-color: #ff0166;
+}
+
+h2:before,
+h3:before {
+  display: inline-block;
+  transform: translateX(-100%);
+  /* margin-left: -0.5em; */
+  width: 7rem;
+  position: absolute;
+  font-size: 50%;
+  line-height: 2em;
+  text-align: right;
+  padding-right: 1em;
+  color: black;
+}
+
+h2:before {
+  content: counter(h2) "";
+  counter-increment: h2;
+  counter-reset: h3;
+}
+h3:before {
+  content: counter(h2) "." counter(h3);
+  counter-increment: h3;
+}
+
+section {
+  counter-reset: h3;
+  margin-top: var(--type-scale-5);
+  margin-bottom: var(--type-scale-5);
+}
+
+header {
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+section + section {
+  /* border-top: 5px solid var(--color-purple); */
+}
+
+section:after {
+  content: "";
+  display: block;
+}
+
+@media print {
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  p:first-line,
+  div:first-line,
+  blockquote:first-line,
+  li:first-line {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+								   http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+	 * Don't show links that are fragment identifiers,
+	 * or use the `javascript:` pseudo protocol
+	 */
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+	 * Printing Tables:
+	 * http://css-discuss.incutio.com/wiki/Printing_Tables
+	 */
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  form {
+    display: none;
+  }
+}
