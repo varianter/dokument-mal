@@ -221,6 +221,14 @@ hr {
   font-size: 1rem;
   font-weight: normal;
 }
+.signatures h3 {
+  font-size: 1rem;
+}
+.signatures h2,
+.signatures h3 {
+  margin-left: 0;
+  display: block;
+}
 .signatures h2:before,
 .signatures h3:before {
   display: none;
@@ -234,9 +242,6 @@ hr {
   margin: var(--type-scale-5) 1rem;
   flex: 1 1 40%;
   text-align: center;
-}
-.signatures h3 {
-  font-size: 1rem;
 }
 
 section + section {
