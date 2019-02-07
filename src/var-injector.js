@@ -17,12 +17,20 @@ const modifiers = {
 };
 
 window.addEventListener("load", function() {
+  insertCss();
+
   const main = sel("main");
   const fields = getFields(main);
   prefillCustomElementsWithQuery(fields);
 
-  const form = constructForm(fields, updateUrlBox);
-  document.body.insertBefore(form, main);
+  const top = container(constructForm(fields, updateUrlBox));
+
+  document.body.addEventListener("click", function(e) {
+    if (isInContainer(e.target, top)) return;
+    top.classList.remove("var-injector--open");
+  });
+
+  document.body.insertBefore(top, main);
 
   updateUrlBox();
 });
@@ -92,7 +100,7 @@ function constructForm(fields, cb) {
 function createUrlBox() {
   const label = ce("label");
   label.setAttribute("for", "urlbox");
-  label.textContent = "URL";
+  label.textContent = "Generert URL som kan kopieres";
 
   const input = ce("input");
   input.name = "urlbox";
@@ -101,9 +109,21 @@ function createUrlBox() {
   input.value = "";
   input.readOnly = true;
 
+  const copyButton = ce("button");
+  copyButton.type = "button";
+  copyButton.textContent = "COPY";
+  copyButton.addEventListener("click", function copy() {
+    input.select();
+    document.execCommand("copy");
+    alert("Kopiert til clipboard"); // Hah! Alert!
+  });
+
   const li = ce("li");
+  li.classList.add("url-box");
+
   li.appendChild(label);
   li.appendChild(input);
+  li.appendChild(copyButton);
   return li;
 }
 
@@ -179,4 +199,43 @@ function objectToUrl(obj) {
 
 function getUrl() {
   return document.location.href.split("?")[0];
+}
+
+function container(form) {
+  const title = "Sett inn verdier";
+  const aside = ce("aside");
+  aside.classList.add("var-injector");
+
+  const toggle = ce("button");
+  const img = ce("img");
+  img.src = "../assets/edit.svg";
+  img.alt = title;
+  toggle.appendChild(img);
+
+  toggle.title = title;
+  toggle.addEventListener("click", function() {
+    aside.classList.toggle("var-injector--open");
+  });
+
+  aside.appendChild(toggle);
+  aside.appendChild(form);
+  return aside;
+}
+
+function insertCss() {
+  const link = ce("link");
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href = "../src/inject-style.css";
+  document.querySelector("head").appendChild(link);
+}
+
+function isInContainer(el, container) {
+  let check = el;
+  do {
+    if (check === container) {
+      return true;
+    }
+  } while ((check = check.parentNode));
+  return false;
 }

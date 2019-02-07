@@ -1,0 +1,115 @@
+.var-injector {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  background: #33333d;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  overflow: hidden;
+
+  transition: max-height 300ms ease-in, background 250ms ease-in;
+  max-height: 2rem;
+
+  color: #fff;
+  z-index: 9999;
+  opacity: 0.9;
+}
+.var-injector--open {
+  overflow: auto;
+  max-height: 70vh;
+}
+
+.var-injector button {
+  background: transparent;
+  width: 100%;
+  display: block;
+  border: 0;
+  cursor: pointer;
+  transition: background 150ms ease-in;
+}
+.var-injector button:hover {
+  background: #ddddd355;
+}
+.var-injector button img {
+  display: block;
+  margin-left: auto;
+  height: 2rem;
+  filter: invert(1);
+}
+
+.var-injector form ul {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.var-injector form ul li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  flex: 1 1 50%;
+  padding: 1rem;
+}
+
+.var-injector label {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.1;
+}
+
+.var-injector input {
+  font-family: Arial, Helvetica, sans-serif;
+
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+
+  padding: 0.5rem 1rem;
+  border: 0;
+  width: 100%;
+
+  line-height: 1;
+}
+.var-injector input[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+.var-injector input[type="date"] {
+  padding-bottom: calc(0.5rem + 1px);
+}
+
+@media print {
+  .var-injector {
+    display: none;
+  }
+}
+
+.url-box {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.url-box label {
+  width: 100%;
+}
+.url-box button {
+  width: 10%;
+  flex: 0 1 auto;
+  padding: 0.5rem 1rem;
+  background: #03dac6;
+  font-size: inherit;
+  line-height: 1;
+  margin: 0;
+}
+.url-box input {
+  width: auto;
+  flex: 1 0 auto;
+}
