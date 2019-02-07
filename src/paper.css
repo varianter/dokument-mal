@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600");
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500%7CIBM+Plex+Serif:400,500");
 
 :root {
   --font-size-min: 14;
@@ -19,7 +19,7 @@
 }
 
 html {
-  font-family: "IBM Plex Sans", serif;
+  font-family: "IBM Plex Sans", sans-serif;
   /* font-size: 137.5%; */
   font-size: calc(
     (var(--font-size-min) * 1px) + (var(--font-size-max) - var(--font-size-min)) *
@@ -202,6 +202,38 @@ header {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+hr {
+  margin: var(--type-scale-5) 0;
+}
+
+.signatures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.signatures h2 {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: normal;
+}
+.signatures h2:before,
+.signatures h3:before {
+  display: none;
+}
+
+.signatures div {
+  margin: 0;
+}
+.signatures > div {
+  border-top: 1px solid #000;
+  margin: var(--type-scale-5) 1rem;
+  flex: 1 1 40%;
+  text-align: center;
+}
+.signatures h3 {
+  font-size: 1rem;
 }
 
 section + section {
