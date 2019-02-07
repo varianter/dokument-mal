@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600");
+
+:root {
+  --font-size-min: 14;
+  --font-size-max: 20;
+  --viewport-min: 400;
+  --viewport-max: 1200;
+
+  --type-scale: 1.2;
+
+  --type-scale-0: calc(var(--type-scale) * 1rem);
+  --type-scale-1: calc(var(--type-scale) * var(--type-scale-0));
+  --type-scale-2: calc(var(--type-scale) * var(--type-scale-1));
+  --type-scale-3: calc(var(--type-scale) * var(--type-scale-2));
+  --type-scale-4: calc(var(--type-scale) * var(--type-scale-3));
+  --type-scale-5: calc(var(--type-scale) * var(--type-scale-4));
+
+  --color-purple: #6200ee;
+}
+
+html {
+  font-family: "IBM Plex Sans", serif;
+  /* font-size: 137.5%; */
+  font-size: calc(
+    (var(--font-size-min) * 1px) + (var(--font-size-max) - var(--font-size-min)) *
+      (
+        (100vw - (var(--viewport-min) * 1px)) /
+          (var(--viewport-max) - var(--viewport-min))
+      )
+  );
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  letter-spacing: -0.015em;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+hgroup {
+  margin-bottom: 5rem;
+}
+hgroup h1 img {
+  display: block;
+  height: 2rem;
+}
+hgroup h1,
+hgroup h2 {
+  display: inline-block;
+  margin: 0;
+}
+hgroup h2 {
+  margin-left: 0.5rem;
+}
+
+h1 {
+  font-size: var(--type-scale-2);
+}
+h2 {
+  font-size: var(--type-scale-6);
+}
+h3 {
+  font-size: var(--type-scale-1);
+}
+
+main {
+  margin: 2rem;
+  width: 80%;
+}
+
+p {
+  max-width: 30rem;
+  margin-bottom: 5rem;
+}
+
+article a {
+  display: block;
+  max-width: 50rem;
+  padding: 1rem 2rem;
+  box-shadow: 0px 0.5em 1em 4px rgba(155, 155, 155, 0.2);
+  margin: 1em 0;
+  color: var(--color-purple, currentColor);
+  font-weight: bold;
+  transition: text-decoration-color 200ms ease-in;
+  text-decoration-color: #ff0166;
+}
+article a:hover {
+  text-decoration-color: #03dac6;
+}
