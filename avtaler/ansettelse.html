@@ -13,25 +13,27 @@
         <header>
           <h5>Ansettelsesavtale mellom</h5>
           <h1>
-            <strong>Variant AS</strong> og
-            <strong>[[Navn|Fornavn Etternavn]]</strong>
+            <strong>Variant AS</strong> <span>Org.nr.: 920 933 408</span> og
+            <strong><v-field title="Navn">Fornavn Etternavn</v-field></strong>
           </h1>
           <div>
-            <h6>Variant AS</h6>
-            <small>Org. nummer: 920 933 408</small>
-          </div>
-          <div>
-            <h6>[[Navn|Fornavn Etternavn]]</h6>
-            <small> Fødselsnummer: [[Fødselsnummer|010988 55555]] </small>
+            Fødselsnummer:
+            <strong
+              ><v-field title="Fødselsnummer">010988 55555</v-field></strong
+            >
           </div>
         </header>
         <section>
           <h2>Avtale om ansettelse i Variant AS</h2>
           <p>
-            [[Navn| Fornavn Etternavn]] (heretter kalt Arbeidstakeren) ansettes
-            som konsulent i Variant AS (heretter kalt Variant). Arbeidstakerens
-            Ansiennitetsnivå settes til [NUMBER[Ansiennitet|2018]].
-            Ansettelsesforholdet starter [DATE[Startdato|2019-09-01]formatDate].
+            <v-field title="Navn">Fornavn Etternavn</v-field> (heretter kalt
+            Arbeidstakeren) ansettes som konsulent i Variant AS (heretter kalt
+            Variant). Arbeidstakerens Ansiennitetsnivå settes til
+            <v-field title="Ansiennitet" type="number">2018</v-field>.
+            Ansettelsesforholdet starter
+            <v-field title="Startdato" type="date" format="formatDate"
+              >2019-09-01</v-field
+            >.
           </p>
           <p>
             Innenfor det stillingsnivå Arbeidstakeren er ansatt i, er det stor
@@ -105,8 +107,11 @@
         <section>
           <h2>Lønnsbetingelser</h2>
 
-          <h3>Fastlønn</h3>
-          <p>Arbeidstakerens fastlønn utgjør årlig kr [[Lønn|650 000]],-.</p>
+          <h3>5.1 Fastlønn</h3>
+          <p>
+            Arbeidstakerens fastlønn utgjør årlig kr
+            <v-field title="Lønn">650 000</v-field>,-.
+          </p>
 
           <h3>Bonus</h3>
           <p>
@@ -360,14 +365,19 @@
         </section>
 
         <footer>
-          <h2>Trondheim, den [DATE[Signert dato|2019-01-30]formatDate]</h2>
+          <h2>
+            Trondheim, den
+            <v-field title="Signert dato" type="date" format="formatDate"
+              >2019-01-30</v-field
+            >
+          </h2>
 
           <div>
             <h3>Odd Morten Sveås</h3>
             <h4>Daglig leder</h4>
           </div>
           <div>
-            <h3>[[Navn|Fornavn Etternavn]]</h3>
+            <h3><v-field title="Navn">Fornavn Etternavn</v-field></h3>
             <div>Arbeidstaker</div>
           </div>
         </footer>
