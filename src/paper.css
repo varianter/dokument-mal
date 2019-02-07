@@ -271,6 +271,12 @@ section:after {
     text-decoration: underline;
   }
 
+  ul,
+  li {
+    page-break-inside: avoid;
+  }
+
+  /* 
   a[href]:after {
     content: " (" attr(href) ")";
   }
