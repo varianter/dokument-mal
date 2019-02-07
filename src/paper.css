@@ -123,6 +123,10 @@ p + p:before {
   display: inline-block;
   width: 1rem;
 }
+p + h3,
+p + h2 {
+  margin-top: var(--type-scale-3);
+}
 
 /* Tables */
 table {
@@ -211,8 +215,8 @@ section:after {
 
 @media print {
   @page {
-    size: auto;
-    margin: 20mm 0 20mm 0;
+    size: A4;
+    margin: 20mm 40mm 20mm 30mm;
   }
 
   *,
@@ -241,6 +245,17 @@ section:after {
 
   abbr[title]:after {
     content: " (" attr(title) ")";
+  }
+
+  article {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    max-width: initial;
+    padding-left: 10mm;
+  }
+  p {
+    max-width: initial;
   }
 
   /*
