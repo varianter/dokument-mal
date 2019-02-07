@@ -286,7 +286,7 @@ section:after {
 
   abbr[title]:after {
     content: " (" attr(title) ")";
-  }
+  } */
 
   article {
     margin-left: 0;
