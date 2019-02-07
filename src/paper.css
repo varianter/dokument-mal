@@ -210,6 +210,11 @@ section:after {
 }
 
 @media print {
+  @page {
+    size: auto;
+    margin: 20mm 0 20mm 0;
+  }
+
   *,
   *:before,
   *:after,
@@ -255,7 +260,7 @@ section:after {
   pre,
   blockquote {
     border: 1px solid #999;
-    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   /*
@@ -277,6 +282,14 @@ section:after {
   h3 {
     orphans: 3;
     widows: 3;
+  }
+
+  h1 {
+    page-break-before: always;
+  }
+
+  header {
+    page-break-after: always;
   }
 
   h2,
