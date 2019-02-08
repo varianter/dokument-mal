@@ -166,27 +166,30 @@ a {
   text-decoration-color: #ff0166;
 }
 
+h2,
+h3 {
+  display: flex;
+  align-items: baseline;
+  margin-left: -3rem;
+}
 h2:before,
 h3:before {
-  display: inline-block;
-  transform: translateX(-100%);
-  /* margin-left: -0.5em; */
-  width: 7rem;
-  position: absolute;
-  font-size: 50%;
-  line-height: 2em;
+  display: block;
+  width: 3rem;
+  left: -0.5rem;
+  position: relative;
+  font-size: 60%;
   text-align: right;
-  padding-right: 1em;
   color: black;
 }
 
 h2:before {
-  content: counter(h2) "";
+  content: counter(h2) ".";
   counter-increment: h2;
   counter-reset: h3;
 }
 h3:before {
-  content: counter(h2) "." counter(h3);
+  content: counter(h2) "." counter(h3) ".";
   counter-increment: h3;
 }
 
@@ -218,6 +221,14 @@ hr {
   font-size: 1rem;
   font-weight: normal;
 }
+.signatures h3 {
+  font-size: 1rem;
+}
+.signatures h2,
+.signatures h3 {
+  margin-left: 0;
+  display: block;
+}
 .signatures h2:before,
 .signatures h3:before {
   display: none;
@@ -231,9 +242,6 @@ hr {
   margin: var(--type-scale-5) 1rem;
   flex: 1 1 40%;
   text-align: center;
-}
-.signatures h3 {
-  font-size: 1rem;
 }
 
 section + section {
@@ -283,7 +291,7 @@ section:after {
 
   abbr[title]:after {
     content: " (" attr(title) ")";
-  }
+  } */
 
   article {
     margin-left: 0;
