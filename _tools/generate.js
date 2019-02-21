@@ -9,7 +9,7 @@ async function start() {
   try {
     const template = await getTemplate("index_template");
     const documents = await getDocuments();
-    const documentItems = documents.map(createItem);
+    const documentItems = documents.map(createItem).join("\n");
 
     const result = insert(template, {
       content: documentItems
