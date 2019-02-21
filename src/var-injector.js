@@ -248,6 +248,6 @@ function createLogo() {
   const logo = ce("img");
   logo.alt = "Variant";
   logo.classList.add("logo");
-  logo.src = "../assets/variant-bw.svg";
+  logo.src = "../assets/logo-bw.svg";
   return logo;
 }

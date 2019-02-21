@@ -5,6 +5,28 @@ som du gjerne kan bruke også! De er helt åpne og lisensiert under MIT lisens.
 Det er ingen krav til attributering, men om dere vil komme innom for en kopp
 kaffe sier vi gjerne ja!
 
+## Dine egne versjoner av avtalene
+
+Vi oppfordrer alle til å bruke disse avtalene. For å lage dine egne versjoner av
+avtalene kan du kopiere denne kodebasen ved å trykke "fork" oppe i høyre hjørne.
+Ved å aktivere [Github Pages](https://pages.github.com/) på det prosjektet vil
+du få opp din egen kopi av avtalene som du kan endre. For å endre innholdet av
+avtaler er det bare til å oppdatere selve filene som finnes under
+[`./avtaler`](./avtaler). Når man oppdaterer kodebasen vil avtalene automatisk
+bli oppdatert.
+
+Om du legger til nye avtaler må fremsiden genereres på nytt. Se
+[Utvikling](#utvikling) for detaljer.
+
+### Din egen profil
+
+For å tilpasse til din egen profil burde avtaler endres til å si ditt firmanavn
+og dine detaljer. I tillegg burde følgende filer endres til deres logo:
+
+- [assets/logo.svg](./assets/logo.svg)
+- [assets/logo-bw.svg](./assets/logo-bw.svg)
+- [assets/favicon.svg](./assets/favicon.svg)
+
 ## Utvikling
 
 Dette er kun relevant dersom du ønsker å utvide dette prosjektet med nye
