@@ -13,6 +13,12 @@
   }
 }
 
+@media screen {
+  v-field {
+    background: lightyellow;
+  }
+}
+
 .var-injector {
   margin: 0;
   padding: 0;
