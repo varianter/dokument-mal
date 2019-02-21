@@ -140,7 +140,7 @@ function createConstructInputLi(cb) {
     const input = ce("input");
     input.name = id;
     input.id = id;
-    input.type = field.getAttribute("type");
+    input.type = field.getAttribute("type") || "text";
     input.value = field.textContent;
     input.required = true;
 
