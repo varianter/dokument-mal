@@ -1,4 +1,4 @@
-# WIP Open Source mal og kontrakt fra Variant
+# Open Source mal og kontrakt fra Variant
 
 Her finner du et sett med dokumentmaler og kontraktmaler vi bruker i Variant og
 som du gjerne kan bruke også! De er helt åpne og lisensiert under MIT lisens.
