@@ -67,12 +67,30 @@
   line-height: 1.1;
 }
 
+.var-injector input[type="color"],
+.var-injector input[type="date"],
+.var-injector input[type="datetime"],
+.var-injector input[type="datetime-local"],
+.var-injector input[type="email"],
+.var-injector input[type="month"],
+.var-injector input[type="number"],
+.var-injector input[type="password"],
+.var-injector input[type="search"],
+.var-injector input[type="tel"],
+.var-injector input[type="text"],
+.var-injector input[type="time"],
+.var-injector input[type="url"],
+.var-injector input[type="week"],
+.var-injector select:focus,
+.var-injector textarea {
+  font-size: 16px;
+}
+
 .var-injector input {
   font-family: Arial, Helvetica, sans-serif;
 
   margin: 0;
   padding: 0;
-  font-size: inherit;
 
   padding: 0.5rem 1rem;
   border: 0;
