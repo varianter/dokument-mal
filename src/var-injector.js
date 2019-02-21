@@ -20,6 +20,10 @@ window.addEventListener("load", function() {
   insertCss();
 
   const main = sel("main");
+
+  const logo = createLogo();
+  main.querySelector("article").appendChild(logo);
+
   const fields = getFields(main);
   prefillCustomElementsWithQuery(fields);
 
@@ -238,4 +242,12 @@ function isInContainer(el, container) {
     }
   } while ((check = check.parentNode));
   return false;
+}
+
+function createLogo() {
+  const logo = ce("img");
+  logo.alt = "Variant";
+  logo.classList.add("logo");
+  logo.src = "../assets/variant-bw.svg";
+  return logo;
 }
