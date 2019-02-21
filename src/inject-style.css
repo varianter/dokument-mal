@@ -69,7 +69,7 @@
   filter: invert(1);
 }
 
-.var-injector form ul {
+.var-injector ul {
   width: 90%;
   margin: 0 auto;
   display: flex;
@@ -78,7 +78,7 @@
   margin-bottom: 1rem;
 }
 
-.var-injector form ul li {
+.var-injector li {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -132,15 +132,16 @@
   padding-bottom: calc(0.5rem + 1px);
 }
 
-.url-box {
+.var-injector .url-box {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  flex-basis: 100%;
 }
-.url-box label {
+.var-injector .url-box label {
   width: 100%;
 }
-.url-box button {
+.var-injector .url-box button {
   width: 10%;
   flex: 0 1 auto;
   padding: 0.5rem 1rem;
@@ -149,7 +150,7 @@
   line-height: 1;
   margin: 0;
 }
-.url-box input {
+.var-injector .url-box input {
   width: auto;
   flex: 1 0 auto;
 }
