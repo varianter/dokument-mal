@@ -37,7 +37,7 @@ function createItem(item) {
 }
 
 async function getTemplate() {
-  const data = await fs.readFile(path.join(__dirname, "template.html"));
+  const data = await fs.readFile(path.join(__dirname, "index_template.html"));
   return data.toString("utf8");
 }
 
