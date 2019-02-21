@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500%7CIBM+Plex+Serif:400,500");
 
 :root {
-  --font-size-min: 14;
+  --font-size-min: 10;
   --font-size-max: 20;
-  --viewport-min: 400;
+  --viewport-min: 300;
   --viewport-max: 1200;
 
   --type-scale: 1.2;
@@ -154,7 +154,7 @@ code {
 
 article {
   max-width: 50rem;
-  padding: 3rem 7rem;
+  padding: 3rem 6rem;
   box-shadow: 0px 0.5em 1em 4px rgba(155, 155, 155, 0.2);
   margin: 4em auto;
   counter-reset: h2;

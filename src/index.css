@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600");
 
 :root {
-  --font-size-min: 14;
+  --font-size-min: 10;
   --font-size-max: 20;
-  --viewport-min: 400;
+  --viewport-min: 300;
   --viewport-max: 1200;
 
   --type-scale: 1.2;
