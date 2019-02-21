@@ -27,6 +27,11 @@ og dine detaljer. I tillegg burde følgende filer endres til deres logo:
 - [assets/logo-bw.svg](./assets/logo-bw.svg)
 - [assets/favicon.svg](./assets/favicon.svg)
 
+Og maler kan oppdateres:
+
+- [\_tools/contract_template.html](./_tools/contract_template.html)
+- [\_tools/index_template.html](./_tools/index_template.html)
+
 ## Utvikling
 
 Dette er kun relevant dersom du ønsker å utvide dette prosjektet med nye
@@ -43,4 +48,14 @@ generert automatisk via [\_tools](./_tools/generate.js):
 ```sh
 # Fra prosjekt root
 node _tools/generate.js
+```
+
+### Opprett ny avtale
+
+Dette er et hjelpescript for å sette opp en ny avtale. Du kan også bare kopiere
+tidligere avtaler og redigere de om du syns det er enklere.
+
+```sh
+# Fra prosjekt root
+node _tools/create.js my-contract "Kontrakstnavn her"
 ```

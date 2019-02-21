@@ -1,11 +1,13 @@
 const fs = require("fs").promises;
 const path = require("path");
 
+const { save, getTemplate, insert } = require("./utils");
+
 start();
 
 async function start() {
   try {
-    const template = await getTemplate();
+    const template = await getTemplate("index_template");
     const documents = await getDocuments();
     const documentItems = documents.map(createItem);
 
@@ -13,19 +15,12 @@ async function start() {
       content: documentItems
     });
 
-    save(result);
+    save("index", result);
 
     console.log("Generated index.html");
   } catch (e) {
     console.error("Error:", e);
   }
-}
-
-function insert(template, data) {
-  return template.replace(/<%\s*(\w+)\s*%>/gm, function(_, key) {
-    if (!data[key]) return "";
-    return data[key];
-  });
 }
 
 function createItem(item) {
@@ -34,16 +29,6 @@ function createItem(item) {
     <h3><a href="${item.url}" title="${item.title}">${item.title}</a></h3>
   </article>
 `;
-}
-
-async function getTemplate() {
-  const data = await fs.readFile(path.join(__dirname, "index_template.html"));
-  return data.toString("utf8");
-}
-
-async function save(content) {
-  const filename = path.join(__dirname, "..", "index.html");
-  return fs.writeFile(filename, content);
 }
 
 async function getDocuments() {
