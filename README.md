@@ -57,5 +57,5 @@ tidligere avtaler og redigere de om du syns det er enklere.
 
 ```sh
 # Fra prosjekt root
-node _tools/create.js my-contract "Kontrakstnavn her"
+node _tools/create.js my-contract "Kontraktsnavn her"
 ```
