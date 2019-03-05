@@ -1,4 +1,43 @@
-const ce = document.createElement.bind(document);
+function createUiFramework() {
+  const isEvent = k => k.indexOf("on") === 0;
+  const eventName = k => k.substr(2).toLowerCase();
+  function attrs(el, obj) {
+    for (let k in obj) {
+      if (isEvent(k)) {
+        el.addEventListener(eventName(k), obj[k]);
+      } else if (k !== "class") {
+        el.setAttribute(k, obj[k]);
+      } else {
+        const classes = Array.isArray(obj[k]) ? obj[k] : [obj[k]];
+        el.classList.add(...classes);
+      }
+    }
+    return el;
+  }
+  return new Proxy(
+    {},
+    {
+      get(_, element) {
+        return function createElement(obj = {}, children = []) {
+          if (Array.isArray(obj)) {
+            children = obj;
+            obj = {};
+          }
+          const el = attrs(document.createElement(element), obj);
+          children.forEach(function(i) {
+            if (typeof i === "string") {
+              el.textContent = i;
+            } else {
+              el.appendChild(i);
+            }
+          });
+          return el;
+        };
+      }
+    }
+  );
+}
+const ui = createUiFramework();
 const sel = document.querySelector.bind(document);
 const sela = document.querySelectorAll.bind(document);
 
@@ -27,7 +66,9 @@ window.addEventListener("load", function() {
   const fields = getFields(main);
   prefillCustomElementsWithQuery(fields);
 
-  const top = container(constructForm(fields, updateUrlBox));
+  const lists = getLists();
+
+  const top = container(constructForm(fields, lists, updateUrlBox));
 
   document.body.addEventListener("click", function(e) {
     if (isInContainer(e.target, top)) return;
@@ -35,9 +76,12 @@ window.addEventListener("load", function() {
   });
 
   document.body.insertBefore(top, main);
-
   updateUrlBox();
 });
+
+function getLists() {
+  return Array.from(sela("[data-vlist='loop']"));
+}
 
 function getFields() {
   return Array.from(sela("v-field"));
@@ -75,95 +119,203 @@ function updateValue(field, value) {
   });
 }
 
-function updateUrlBox() {
-  const updateBox = document.querySelector("#urlbox");
-  const data = getObjectFromFields();
-  const url = objectToUrl(data);
-  updateBox.value = url;
-}
-
-function constructForm(fields, cb) {
-  const form = ce("form");
-  const ul = ce("ul");
-
+function constructForm(fields, lists, cb) {
+  const { form, ul } = ui;
   const updateDecoration = (...args) => {
     cb();
     updateValue(...args);
   };
-
-  unique(fields)
-    .map(createConstructInputLi(updateDecoration))
-    .forEach(ul.appendChild.bind(ul));
-
-  const urlBox = createUrlBox();
-  ul.appendChild(urlBox);
-  form.appendChild(ul);
-  return form;
+  return form([
+    ul([
+      ...unique(fields).map(createConstructInputLi(updateDecoration)),
+      ...constructListsInput(lists, updateDecoration),
+      createUrlBox()
+    ])
+  ]);
 }
 
 function createUrlBox() {
-  const label = ce("label");
-  label.setAttribute("for", "urlbox");
-  label.textContent = "Generert URL som kan kopieres";
-
-  const input = ce("input");
-  input.name = "urlbox";
-  input.id = "urlbox";
-  input.type = "text";
-  input.value = "";
-  input.readOnly = true;
-
-  const copyButton = ce("button");
-  copyButton.type = "button";
-  copyButton.textContent = "COPY";
-  copyButton.addEventListener("click", function copy() {
-    input.select();
-    document.execCommand("copy");
-    alert("Kopiert til clipboard"); // Hah! Alert!
+  const { label, input, button, li } = ui;
+  const inputEl = input({
+    name: "urlbox",
+    id: "urlbox",
+    type: "text",
+    value: "",
+    readOnly: true
   });
 
-  const li = ce("li");
-  li.classList.add("url-box");
+  return li({ class: "url-box" }, [
+    label({ for: "urlbox" }, ["Generert URL som kan kopieres"]),
+    inputEl,
+    button(
+      {
+        type: "button",
+        onClick() {
+          inputEl.select();
+          document.execCommand("copy");
+          alert("Kopiert til clipboard"); // Hah! Alert!
+        }
+      },
+      ["COPY"]
+    )
+  ]);
+}
 
-  li.appendChild(label);
-  li.appendChild(input);
-  li.appendChild(copyButton);
-  return li;
+function constructListsInput(lists, update) {
+  const { div, input, label, fieldset, legend, ul, li, button } = ui;
+
+  return lists.map(function(list) {
+    const listTitle = list.getAttribute("data-title");
+    const listSlug = slugify(listTitle);
+    const inputLi = children => li({ class: "loop_li" }, children);
+
+    function removable(children) {
+      const el = inputLi([
+        ...children,
+        button(
+          {
+            title: "Fjern rad",
+            type: "button",
+            class: "loop_removeRow",
+            onClick(e) {
+              e.stopPropagation();
+              el.remove();
+            }
+          },
+          ["✗"]
+        )
+      ]);
+      return el;
+    }
+
+    function createItem(field, i) {
+      const title = field.getAttribute("title");
+      const slug = slugify(title);
+      const id = `input-${listSlug}-${slug}-${i}`;
+
+      return div([
+        label({ for: id }, [title]),
+        input({
+          name: id,
+          id: id,
+          name: `${slug}[${i}]`,
+          type: field.getAttribute("type") || "text",
+          value: field.textContent,
+          required: true,
+          onInput() {
+            update();
+          }
+        })
+      ]);
+    }
+
+    let items = () =>
+      Array.from(list.querySelectorAll("v-item")).map(createItem);
+    const rows = ul([inputLi(items())]);
+
+    function newRow() {
+      rows.appendChild(removable(items()));
+    }
+
+    return fieldset(
+      {
+        class: "loop"
+      },
+      [
+        legend([listTitle]),
+        rows,
+        button(
+          {
+            onClick: newRow,
+            type: "button",
+            class: "loop_addRow"
+          },
+          ["Nye verdier"]
+        )
+      ]
+    );
+  });
 }
 
 function createConstructInputLi(cb) {
+  const { li, input, label } = ui;
   return function(field) {
-    const label = ce("label");
     const title = field.getAttribute("title");
     const slug = slugify(title);
     const id = "input-" + slug;
 
-    label.setAttribute("for", id);
-    label.textContent = title;
-
-    const input = ce("input");
-    input.name = id;
-    input.id = id;
-    input.type = field.getAttribute("type") || "text";
-    input.value = field.textContent;
-    input.required = true;
-
-    const li = ce("li");
-    li.appendChild(label);
-    li.appendChild(input);
-
-    input.addEventListener("input", function(e) {
-      const val = e.currentTarget.value;
-      cb(field, val);
-    });
-
-    return li;
+    return li([
+      label({ for: id }, [title]),
+      input({
+        name: id,
+        id,
+        type: field.getAttribute("type") || "text",
+        value: field.textContent,
+        required: true,
+        onInput(e) {
+          const val = e.currentTarget.value;
+          cb(field, val);
+        }
+      })
+    ]);
   };
 }
 
 function getFormatter(name) {
   const modifierName = modifiers[name] ? name : "identity";
   return modifiers[modifierName];
+}
+
+function container(form) {
+  const { img, button, aside } = ui;
+  const title = "Sett inn verdier";
+
+  const el = aside({ class: "var-injector" }, [
+    button(
+      {
+        title,
+        class: "toggleButton",
+        onClick() {
+          el.classList.toggle("var-injector--open");
+        }
+      },
+      [
+        img({
+          src: "../assets/edit.svg",
+          alt: title
+        })
+      ]
+    ),
+    form
+  ]);
+  return el;
+}
+
+function insertCss() {
+  const { link } = ui;
+  document.querySelector("head").appendChild(
+    link({
+      type: "text/css",
+      rel: "stylesheet",
+      href: "../src/inject-style.css"
+    })
+  );
+}
+
+function createLogo() {
+  const { img } = ui;
+  return img({
+    alt: "Variant",
+    class: "logo",
+    src: "../assets/logo-bw.svg"
+  });
+}
+
+function updateUrlBox() {
+  const updateBox = document.querySelector("#urlbox");
+  const data = getObjectFromFields();
+  const url = objectToUrl(data);
+  updateBox.value = url;
 }
 
 function unique(fields) {
@@ -173,6 +325,28 @@ function unique(fields) {
     visited.push(item.getAttribute("title"));
     return acc.concat(item);
   }, []);
+}
+
+function isInContainer(el, container) {
+  let check = el;
+  do {
+    if (check === container) {
+      return true;
+    }
+  } while ((check = check.parentNode));
+  return false;
+}
+
+function objectToUrl(obj) {
+  const params = new URLSearchParams();
+  for (let key of Object.keys(obj)) {
+    if (obj[key]) params.set(key, obj[key]);
+  }
+  return getUrl() + "?" + params.toString();
+}
+
+function getUrl() {
+  return document.location.href.split("?")[0];
 }
 
 function slugify(str) {
@@ -191,63 +365,4 @@ function queryToObject() {
   }
 
   return obj;
-}
-
-function objectToUrl(obj) {
-  const params = new URLSearchParams();
-  for (let key of Object.keys(obj)) {
-    if (obj[key]) params.set(key, obj[key]);
-  }
-  return getUrl() + "?" + params.toString();
-}
-
-function getUrl() {
-  return document.location.href.split("?")[0];
-}
-
-function container(form) {
-  const title = "Sett inn verdier";
-  const aside = ce("aside");
-  aside.classList.add("var-injector");
-
-  const toggle = ce("button");
-  const img = ce("img");
-  img.src = "../assets/edit.svg";
-  img.alt = title;
-  toggle.appendChild(img);
-
-  toggle.title = title;
-  toggle.addEventListener("click", function() {
-    aside.classList.toggle("var-injector--open");
-  });
-
-  aside.appendChild(toggle);
-  aside.appendChild(form);
-  return aside;
-}
-
-function insertCss() {
-  const link = ce("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href = "../src/inject-style.css";
-  document.querySelector("head").appendChild(link);
-}
-
-function isInContainer(el, container) {
-  let check = el;
-  do {
-    if (check === container) {
-      return true;
-    }
-  } while ((check = check.parentNode));
-  return false;
-}
-
-function createLogo() {
-  const logo = ce("img");
-  logo.alt = "Variant";
-  logo.classList.add("logo");
-  logo.src = "../assets/logo-bw.svg";
-  return logo;
 }

@@ -137,15 +137,23 @@ p + h4 {
 
 /* Tables */
 table {
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
   border-spacing: 0px;
   border-collapse: collapse;
+  text-align: left;
+  width: 40%;
+  max-width: 60vw;
+  min-width: 30vw;
 }
 table td,
 table th {
   padding: 0;
   line-height: 33px;
 }
+thead {
+  border-bottom: 1px solid #000;
+}
+
 /* Code blocks */
 code {
   vertical-align: bottom;
@@ -282,14 +290,6 @@ header hr {
 
 .noList li {
   line-height: 1;
-}
-
-table {
-  text-align: left;
-  min-width: 40vw;
-}
-thead {
-  border-bottom: 1px solid #000;
 }
 
 /* 

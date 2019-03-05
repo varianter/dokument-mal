@@ -167,13 +167,33 @@
           <h4>Nøkkelpersonell</h4>
           <p>
             Leverandørens nøkkelpersonell i forbindelse med utførelsen av
-            bistanden er
-            <v-field title="Nøkkelpersonell">Konsulent Smith</v-field>.
+            bistanden er gitt av tabellen under.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Ressurs</th>
+                <th>Kategori</th>
+              </tr>
+            </thead>
+            <tbody data-vlist="loop" data-title="Nøkkelpersonell">
+              <tr>
+                <td>
+                  <v-item title="Navn">Konsulent</v-item>
+                </td>
+                <td>
+                  <v-item title="Stilling">Stilling</v-item>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
             Oppdragets art er av den beskaffenhet at det kan være hensiktsmessig
             å dra veksler på andre ressurser hos Leverandøren. Andre ressurser
             kan derfor bistå Kunden etter avtale med Kunden.
           </p>
-
           <p>
             Skifte av nøkkelpersonell hos Leverandøren skal godkjennes av
             Kunden. Godkjennelse kan ikke nektes uten saklig grunn.
@@ -327,14 +347,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <v-field title="Nøkkelpersonell">Konsulent Smith</v-field>
-                </td>
-                <td>
-                  <v-field title="Nøkkelpersonell Timepris">1 200</v-field>
-                </td>
-              </tr>
               <tr>
                 <td>Senioronsulent</td>
                 <td>
