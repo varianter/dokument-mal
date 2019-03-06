@@ -126,7 +126,7 @@ function createRowInserter(parent) {
     const cloned = tr.cloneNode(true);
     Array.from(cloned.querySelectorAll(`v-item`)).forEach(function(el) {
       const formatter = getFormatter(el.getAttribute("format"));
-      el.textContent = formatter(values[el.title]);
+      el.textContent = formatter(values[slugify(el.title)]);
     });
     return cloned;
   };
@@ -231,7 +231,7 @@ function constructListsInput(lists, update) {
           type: field.getAttribute("type") || "text",
           value: field.textContent,
           required: true,
-          "data-title": title,
+          "data-slug": slug,
           onInput() {
             updateList();
           }
@@ -276,7 +276,7 @@ function createValuesFromLoop(fieldset) {
     const inputs = getInputs(row.querySelectorAll("input"));
     const obj = {};
     for (let item of inputs) {
-      obj[item.getAttribute("data-title")] = item.value;
+      obj[item.getAttribute("data-slug")] = item.value;
     }
     return obj;
   });
