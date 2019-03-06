@@ -86,23 +86,25 @@ function getLists() {
 function getFields() {
   return Array.from(sela("v-field"));
 }
-function getInputs() {
-  return Array.from(sela("input")).filter(i => i.id.indexOf("input-") === 0);
+function getInputs(els = sela("input")) {
+  return Array.from(els).filter(i => i.id.indexOf("input-") === 0);
 }
 function getFieldsOfType(selector) {
   return Array.from(sela(`v-field[title='${selector}']`));
 }
+function getLoopsOfType(selector) {
+  return Array.from(sela(`[data-vlist="loop"][data-title="${selector}"]`));
+}
 function getObjectFromFields() {
   let obj = {};
   for (let field of getInputs()) {
-    obj[field.id] = field.value;
+    obj[field.name] = field.value;
   }
   return obj;
 }
 
 function prefillCustomElementsWithQuery(fields) {
   const defaultValues = queryToObject();
-
   fields.forEach(function updateDefaultValues(field) {
     const slug = "input-" + slugify(field.getAttribute("title"));
     const data = defaultValues[slug];
@@ -118,17 +120,42 @@ function updateValue(field, value) {
     el.textContent = formatter(value);
   });
 }
+function createRowInserter(parent) {
+  const tr = parent.querySelector("tr").cloneNode(true);
+  return function(values) {
+    const cloned = tr.cloneNode(true);
+    Array.from(cloned.querySelectorAll(`v-item`)).forEach(function(el) {
+      const formatter = getFormatter(el.getAttribute("format"));
+      el.textContent = formatter(values[el.title]);
+    });
+    return cloned;
+  };
+}
+
+function updateList(title, values) {
+  getLoopsOfType(title).forEach(function(el) {
+    const rowInserter = createRowInserter(el);
+    emptyNode(el);
+    values.forEach(function(valueSeries) {
+      el.appendChild(rowInserter(valueSeries));
+    });
+  });
+}
 
 function constructForm(fields, lists, cb) {
   const { form, ul } = ui;
-  const updateDecoration = (...args) => {
+  const updateInputDecoration = (...args) => {
     cb();
     updateValue(...args);
   };
+  const updateListDecoration = (...args) => {
+    cb();
+    updateList(...args);
+  };
   return form([
     ul([
-      ...unique(fields).map(createConstructInputLi(updateDecoration)),
-      ...constructListsInput(lists, updateDecoration),
+      ...unique(fields).map(createConstructInputLi(updateInputDecoration)),
+      ...constructListsInput(lists, updateListDecoration),
       createUrlBox()
     ])
   ]);
@@ -164,10 +191,12 @@ function createUrlBox() {
 function constructListsInput(lists, update) {
   const { div, input, label, fieldset, legend, ul, li, button } = ui;
 
-  return lists.map(function(list) {
+  return lists.map(function(list, i) {
     const listTitle = list.getAttribute("data-title");
     const listSlug = slugify(listTitle);
     const inputLi = children => li({ class: "loop_li" }, children);
+    const updateList = () =>
+      update(listTitle, createValuesFromLoop(loopInputs));
 
     function removable(children) {
       const el = inputLi([
@@ -180,6 +209,7 @@ function constructListsInput(lists, update) {
             onClick(e) {
               e.stopPropagation();
               el.remove();
+              updateList();
             }
           },
           ["✗"]
@@ -188,7 +218,7 @@ function constructListsInput(lists, update) {
       return el;
     }
 
-    function createItem(field, i) {
+    function createItem(field) {
       const title = field.getAttribute("title");
       const slug = slugify(title);
       const id = `input-${listSlug}-${slug}-${i}`;
@@ -196,28 +226,31 @@ function constructListsInput(lists, update) {
       return div([
         label({ for: id }, [title]),
         input({
-          name: id,
           id: id,
-          name: `${slug}[${i}]`,
+          name: `input-${listSlug}[${i}][${slug}]`,
           type: field.getAttribute("type") || "text",
           value: field.textContent,
           required: true,
+          "data-title": title,
           onInput() {
-            update();
+            updateList();
           }
         })
       ]);
     }
 
     let items = () =>
-      Array.from(list.querySelectorAll("v-item")).map(createItem);
+      Array.from(list.querySelector("tr").querySelectorAll("v-item")).map(
+        createItem
+      );
     const rows = ul([inputLi(items())]);
 
     function newRow() {
       rows.appendChild(removable(items()));
+      updateList();
     }
 
-    return fieldset(
+    const loopInputs = fieldset(
       {
         class: "loop"
       },
@@ -234,6 +267,18 @@ function constructListsInput(lists, update) {
         )
       ]
     );
+    return loopInputs;
+  });
+}
+
+function createValuesFromLoop(fieldset) {
+  return Array.from(fieldset.querySelectorAll("li")).map(function(row) {
+    const inputs = getInputs(row.querySelectorAll("input"));
+    const obj = {};
+    for (let item of inputs) {
+      obj[item.getAttribute("data-title")] = item.value;
+    }
+    return obj;
   });
 }
 
@@ -363,6 +408,12 @@ function queryToObject() {
   for (let [key, val] of params) {
     obj[key] = val;
   }
-
   return obj;
+}
+
+function emptyNode(node) {
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+  return node;
 }
