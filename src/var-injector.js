@@ -112,7 +112,7 @@ function prefillCustomElementsWithQuery(fields, lists) {
   lists.forEach(function updateDefaultValues(list) {
     const title = list.getAttribute("data-title");
     const slug = slugify(title);
-    updateList(title, defaultValues[`input-${slug}`] || {});
+    updateList(title, defaultValues[`input-${slug}`]);
   });
 }
 
@@ -135,7 +135,7 @@ function createRowInserter(parent) {
   };
 }
 
-function updateList(title, values) {
+function updateList(title, values = []) {
   getLoopsOfType(title).forEach(function(el) {
     const rowInserter = createRowInserter(el);
     emptyNode(el);
