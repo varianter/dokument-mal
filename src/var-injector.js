@@ -191,7 +191,7 @@ function createUrlBox() {
 function constructListsInput(lists, update) {
   const { div, input, label, fieldset, legend, ul, li, button } = ui;
 
-  return lists.map(function(list, i) {
+  return lists.map(function(list) {
     const listTitle = list.getAttribute("data-title");
     const listSlug = slugify(listTitle);
     const inputLi = children => li({ class: "loop_li" }, children);
@@ -218,7 +218,7 @@ function constructListsInput(lists, update) {
       return el;
     }
 
-    function createItem(field) {
+    function createItem(field, i) {
       const title = field.getAttribute("title");
       const slug = slugify(title);
       const id = `input-${listSlug}-${slug}-${i}`;
@@ -239,11 +239,14 @@ function constructListsInput(lists, update) {
       ]);
     }
 
-    let items = () =>
-      Array.from(list.querySelector("tr").querySelectorAll("v-item")).map(
-        createItem
+    let items = isFirst => {
+      const trs = list.querySelectorAll("tr");
+      const len = isFirst ? 0 : trs.length;
+      return Array.from(trs[0].querySelectorAll("v-item")).map(d =>
+        createItem(d, len)
       );
-    const rows = ul([inputLi(items())]);
+    };
+    const rows = ul([inputLi(items(true))]);
 
     function newRow() {
       rows.appendChild(removable(items()));
@@ -406,9 +409,39 @@ function queryToObject() {
   const params = new URLSearchParams(document.location.search);
   let obj = {};
   for (let [key, val] of params) {
-    obj[key] = val;
+    const metadata = getPath(key);
+    if (!metadata) {
+      obj[key] = val;
+    } else {
+      if (!obj[metadata.base]) {
+        obj[metadata.base] = {};
+      }
+
+      if (!obj[metadata.base][metadata.index]) {
+        obj[metadata.base][metadata.index] = {};
+      }
+      obj[metadata.base][metadata.index][metadata.name] = val;
+    }
+  }
+
+  // normalize from object to array when nested
+  for (let key in obj) {
+    if (typeof obj[key] !== "object") continue;
+    obj[key] = Object.keys(obj[key]).map(k => obj[key][k]);
   }
   return obj;
+}
+
+function getPath(key) {
+  const res = /([\w\-]+)\[(\d+)\]\[([\w\-]+)\]/gm.exec(key);
+  if (!res) return;
+  const [, base, numS, name] = res;
+
+  return {
+    base,
+    index: parseInt(numS, 10),
+    name
+  };
 }
 
 function emptyNode(node) {
