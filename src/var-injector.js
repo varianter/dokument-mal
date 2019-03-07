@@ -64,9 +64,8 @@ window.addEventListener("load", function() {
   main.querySelector("article").appendChild(logo);
 
   const fields = getFields(main);
-  prefillCustomElementsWithQuery(fields);
-
   const lists = getLists();
+  prefillCustomElementsWithQuery(fields, lists);
 
   const top = container(constructForm(fields, lists, updateUrlBox));
 
@@ -80,9 +79,8 @@ window.addEventListener("load", function() {
 });
 
 function getLists() {
-  return Array.from(sela("[data-vlist='loop']"));
+  return Array.from(sela("[data-vloop]"));
 }
-
 function getFields() {
   return Array.from(sela("v-field"));
 }
@@ -93,7 +91,7 @@ function getFieldsOfType(selector) {
   return Array.from(sela(`v-field[title='${selector}']`));
 }
 function getLoopsOfType(selector) {
-  return Array.from(sela(`[data-vlist="loop"][data-title="${selector}"]`));
+  return Array.from(sela(`[data-vloop][data-title="${selector}"]`));
 }
 function getObjectFromFields() {
   let obj = {};
@@ -103,13 +101,18 @@ function getObjectFromFields() {
   return obj;
 }
 
-function prefillCustomElementsWithQuery(fields) {
+function prefillCustomElementsWithQuery(fields, lists) {
   const defaultValues = queryToObject();
   fields.forEach(function updateDefaultValues(field) {
     const slug = "input-" + slugify(field.getAttribute("title"));
     const data = defaultValues[slug];
     if (!slug || !data) return;
     field.textContent = defaultValues[slug];
+  });
+  lists.forEach(function updateDefaultValues(list) {
+    const title = list.getAttribute("data-title");
+    const slug = slugify(title);
+    updateList(title, defaultValues[`input-${slug}`] || {});
   });
 }
 
