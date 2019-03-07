@@ -135,7 +135,8 @@ function createRowInserter(parent) {
   };
 }
 
-function updateList(title, values = []) {
+function updateList(title, values) {
+  if (!values) return;
   getLoopsOfType(title).forEach(function(el) {
     const rowInserter = createRowInserter(el);
     emptyNode(el);
