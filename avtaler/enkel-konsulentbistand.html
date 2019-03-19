@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../src/paper.css" />
+    <title>Variant: Avtale om konsulentbistand (kort)</title>
+
+    <link rel="shortcut icon" href="../assets/favicon.png" type="image/png" />
+    <style>
+      /* Document specific styling here */
+
+      .addressants-preface {
+        font-size: 1rem;
+        font-weight: normal;
+      }
+      .addressants-header {
+        text-align: center;
+      }
+      .addressants-header strong {
+        font-family: "IBM Plex Serif", serif;
+      }
+      .addressants-header strong,
+      .addressants-header small {
+        display: block;
+      }
+      .addressants-header small {
+        margin: 0;
+        font-size: 0.8rem;
+      }
+      .addressants-header .bind {
+        margin: 1rem 0;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <article>
+        <header>
+          <h5 class="addressants-preface">Avtale om konsulentbistand</h5>
+          <p>er inngått mellom</p>
+          <h1 class="addressants-header">
+            <strong>Variant AS</strong>
+            <small>(heretter kalt Leverandøren)</small>
+            <span class="bind">og</span>
+            <strong><v-field title="Kunde">Kunde</v-field></strong>
+            <small>(heretter kalt Kunden)</small>
+          </h1>
+          <div>
+            <strong>
+              <v-field title="Sted">Trondheim</v-field>
+              <v-field title="Startdato" type="date" format="formatDate">
+                2019-09-01
+              </v-field>
+            </strong>
+          </div>
+          <hr />
+          <div class="split split--signatures">
+            <div>
+              <h3><v-field title="Kundens navn">Kundens Navn</v-field></h3>
+              <v-field title="Kunde">Kunde</v-field>
+            </div>
+            <div>
+              <h3>Odd Morten Sveås</h3>
+              <div>Variant</div>
+            </div>
+          </div>
+
+          <div>Avtalen undertegnes i to eksemdivlarer, ett til hver part.</div>
+          <div class="split ">
+            <h3>Henvendelser</h3>
+            <span>Alle henvendelser vedrørende denne avtalen rettes til:</span>
+
+            <address>
+              <h3>Hos Kunden:</h3>
+              <ul class="noList">
+                <li><v-field title="Kundens navn">Kundens Navn</v-field></li>
+                <li><v-field title="Kundens stilling">Stilling</v-field></li>
+                <li><v-field title="Kundens telefon">815 49 300</v-field></li>
+                <li>
+                  <v-field title="Kundens epost" type="email"
+                    >kunde@selskap.no</v-field
+                  >
+                </li>
+              </ul>
+            </address>
+
+            <address>
+              <h3>Hos Leverandøren:</h3>
+              <ul class="noList">
+                <li>Odd Morten Sveås</li>
+                <li>Daglig leder</li>
+                <li>928 07 375</li>
+                <li>oms@variant.no</li>
+              </ul>
+            </address>
+          </div>
+        </header>
+
+        <section>
+          <h2>Alminnelige bestemmelser</h2>
+
+          <h3>Omfanget av bestemmelsen</h3>
+
+          <p>
+            Leverandøren skal yte faglig bistand under Kundens ledelse, heretter
+            kalt bistanden.
+          </p>
+
+          <h4>Beskrivelse av bistanden</h4>
+          <v-field title="Beskrivelse av bistand" type="textarea"
+            >[Fyll inn beskrivelse av bistanden. Eks: Leverandøren bistår med et
+            team, bestående av en prosjektleder, 2 utviklere og 2 designere. De
+            skal levere produkt A. Eller Leverandøren bisår med en Senior
+            designer på 50%.]</v-field
+          >
+          <p>
+            I den utstrekning Kunden ønsker det, skal Leverandøren også delta i
+            andre aktiviteter som inngår i prosjektet.
+          </p>
+
+          <h4>Varighet</h4>
+          <p>
+            Oppdraget starter
+            <v-field title="Start dato" type="date" format="formatDate">
+              2019-01-30
+            </v-field>
+            og varer til
+            <v-field title="Slutt dato" type="date" format="formatDate">
+              2019-01-30 </v-field
+            >.
+          </p>
+
+          <h4>Partenes representanter</h4>
+          <p>
+            Hver av partene skal ved inngåelsen av avtalen oppnevne en
+            representant som er bemyndiget til å opptre på̊ vegne av partene i
+            saker som angår avtalen. Bemyndiget representant for partene:
+          </p>
+
+          <address>
+            <strong>Hos Kunden:</strong>
+            <ul class="noList">
+              <li><v-field title="Kundens navn">Kundens Navn</v-field></li>
+              <li><v-field title="Kundens stilling">Stilling</v-field></li>
+              <li><v-field title="Kundens telefon">815 49 300</v-field></li>
+              <li>
+                <v-field title="Kundens epost" type="email"
+                  >kunde@selskap.no</v-field
+                >
+              </li>
+            </ul>
+          </address>
+
+          <address>
+            <strong>Hos Leverandøren:</strong>
+            <ul class="noList">
+              <li>Odd Morten Sveås</li>
+              <li>Daglig leder</li>
+              <li>928 07 375</li>
+              <li>oms@variant.no</li>
+            </ul>
+          </address>
+
+          <h4>Nøkkelpersonell</h4>
+          <p>
+            Leverandørens nøkkelpersonell i forbindelse med utførelsen av
+            bistanden er gitt av tabellen under.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Ressurs</th>
+                <th>Kategori</th>
+              </tr>
+            </thead>
+            <tbody data-vloop data-title="Nøkkelpersonell">
+              <tr>
+                <td>
+                  <v-item title="Navn">Konsulent</v-item>
+                </td>
+                <td>
+                  <v-item title="Stilling">Stilling</v-item>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            Oppdragets art er av den beskaffenhet at det kan være hensiktsmessig
+            å dra veksler på andre ressurser hos Leverandøren. Andre ressurser
+            kan derfor bistå Kunden etter avtale med Kunden.
+          </p>
+          <p>
+            Skifte av nøkkelpersonell hos Leverandøren skal godkjennes av
+            Kunden. Godkjennelse kan ikke nektes uten saklig grunn.
+          </p>
+        </section>
+
+        <section>
+          <h2>Vederlag og betalingsbetingelser</h2>
+          <h3>Vederlag</h3>
+
+          <p>
+            Vederlag for bistanden bregnes etter medgått tid, og med fast
+            timepris basert på oversikten under.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Ressurs</th>
+                <th>Timepris</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Senioronsulent</td>
+                <td>
+                  <v-field title="Timepris senioronsulent">1 200</v-field>
+                </td>
+              </tr>
+              <tr>
+                <td>Konsulent</td>
+                <td><v-field title="Timepris konsulent">1 050</v-field></td>
+              </tr>
+              <tr>
+                <td>Junioronsulent</td>
+                <td>
+                  <v-field title="Timepris junioronsulent">900</v-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <small>(Pris er eks. mva)</small>
+
+          <p>
+            Utlegg, inklusive reise- og diettkostnader, dekkes bare i den grad
+            de er avtalt. Reise- og diettkostnader skal spesifiseres særskilt,
+            og dekkes etter statens gjeldende satser.
+          </p>
+
+          <h3>Fakturering</h3>
+          <p>
+            Fakturering skjer etterskuddsvis pr måned. Fakturert beløp skal
+            gjelde den tid som er medgått frem til faktureringstidspunktet, samt
+            eventuell dekning av utgifter påløpt i samme tidsrom.
+          </p>
+          <p>
+            Leverandørens fakturaer skal spesifiseres og dokumenteres slik at de
+            kan kontrolleres av kunden. Alle fakturaer for løpende timer skal
+            være vedlagt detaljert spesifikasjon over påløpte timer. Utlegg og
+            andre utgifter skal angis særskilt.
+          </p>
+
+          <br />
+
+          <p>
+            Betaling skal skje i henhold til faktura per 15 (femten)
+            kalenderdager.
+          </p>
+
+          <br />
+
+          <strong>Faktura skal merkes med:</strong>
+          <ul class="noList">
+            <li>
+              Referansenummer:
+              <v-field title="Kundes refnr (Ikke obligatorisk)"
+                >Kundes refnr</v-field
+              >
+            </li>
+            <li>Navn: <v-field title="Kundens navn">Kundens Navn</v-field></li>
+            <li>
+              Fakturaadresse:
+              <v-field title="Kundens epost" type="email"
+                >kunde@selskap.no</v-field
+              >
+            </li>
+          </ul>
+
+          <h3>Prisendring</h3>
+
+          <p>
+            Prisen endres hvert årsskifte, basert på økningen i statistisk
+            sentralbyrås konsumprisindeks (hovedindeksen), første gang med
+            utgangspunkt i indeksen for den måned avtalen ble inngått.
+          </p>
+        </section>
+
+        <section>
+          <h2>Opphavs- og eiendomsrett</h2>
+
+          <p>
+            Eiendomsrett, opphavsrett og andre relevante materielle og
+            immaterielle rettigheter til resultater av bistanden tilfaller
+            kunden når betaling er skjedd, med de begrensninger som følger av
+            ufravikelig lov.
+          </p>
+          <p>
+            Leverandøren beholder rettighetene til egne verktøy og
+            metodegrunnlag. Begge parter kan også utnytte generell kunnskap
+            (know-how) som ikke er taushetsbelagt og som de har tilegnet seg i
+            forbindelse med bistanden.
+          </p>
+        </section>
+      </article>
+    </main>
+
+    <!-- Include variable injector script -->
+    <script src="../src/var-injector.js"></script>
+  </body>
+</html>
