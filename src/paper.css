@@ -153,6 +153,10 @@ table th {
 thead {
   border-bottom: 1px solid #000;
 }
+th.number,
+td.number {
+  text-align: right;
+}
 
 /* Code blocks */
 code {
