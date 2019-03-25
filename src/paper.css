@@ -63,10 +63,20 @@ ol li {
 ul ul,
 ol ul,
 ul ol,
-ol ol {
+ol ol,
+dt, dd {
   margin-top: 0;
   margin-bottom: 0;
 }
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: minmax(min-content, max-content);
+  grid-gap: 0.4rem 0.5rem;
+}
+dt{ grid-column: 1; }
+dd{ grid-column: 2;  }
+
 blockquote {
   line-height: 1.5rem;
   margin-top: 1.5rem;
@@ -296,7 +306,7 @@ header hr {
   line-height: 1;
 }
 
-/* 
+/*
 section + section {
    border-top: 5px solid var(--color-purple);
 }
@@ -338,7 +348,7 @@ section:after {
     page-break-inside: avoid;
   }
 
-  /* 
+  /*
   a[href]:after {
     content: " (" attr(href) ")";
   }
