@@ -50,8 +50,8 @@
           </h1>
           <div>
             <strong>
-              <v-field title="Sted">Trondheim</v-field>
-              <v-field title="Startdato" type="date" format="formatDate">
+              <v-field title="Signeringssted">Trondheim</v-field>
+              <v-field title="Signeringsdato" type="date" format="formatDate">
                 2019-09-01
               </v-field>
             </strong>
@@ -59,7 +59,7 @@
           <hr />
           <div class="split split--signatures">
             <div>
-              <h3><v-field title="Kundens navn">Kundens Navn</v-field></h3>
+              <h3><v-field title="Kundens ansvarlige -  navn">Kundens Navn</v-field></h3>
               <v-field title="Kunde">Kunde</v-field>
             </div>
             <div>
@@ -76,11 +76,11 @@
             <address>
               <h3>Hos Kunden:</h3>
               <ul class="noList">
-                <li><v-field title="Kundens navn">Kundens Navn</v-field></li>
-                <li><v-field title="Kundens stilling">Stilling</v-field></li>
-                <li><v-field title="Kundens telefon">815 49 300</v-field></li>
+                <li><v-field title="Kundens ansvarlige -  navn">Kundens Navn</v-field></li>
+                <li><v-field title="Kundens ansvarlige -  stilling">Stilling</v-field></li>
+                <li><v-field title="Kundens ansvarlige -  telefon">815 49 300</v-field></li>
                 <li>
-                  <v-field title="Kundens epost" type="email"
+                  <v-field title="Kundens ansvarlige -  epost" type="email"
                     >kunde@selskap.no</v-field
                   >
                 </li>
@@ -124,11 +124,11 @@
           <h4>Varighet</h4>
           <p>
             Oppdraget starter
-            <v-field title="Start dato" type="date" format="formatDate">
+            <v-field title="Oppstartsdato" type="date" format="formatDate">
               2019-01-30
             </v-field>
             og varer til
-            <v-field title="Slutt dato" type="date" format="formatDate">
+            <v-field title="Avslutningsdato" type="date" format="formatDate">
               2019-01-30 </v-field
             >.
           </p>
@@ -140,29 +140,31 @@
             saker som angår avtalen. Bemyndiget representant for partene:
           </p>
 
-          <address>
-            <strong>Hos Kunden:</strong>
-            <ul class="noList">
-              <li><v-field title="Kundens navn">Kundens Navn</v-field></li>
-              <li><v-field title="Kundens stilling">Stilling</v-field></li>
-              <li><v-field title="Kundens telefon">815 49 300</v-field></li>
-              <li>
-                <v-field title="Kundens epost" type="email"
-                  >kunde@selskap.no</v-field
-                >
-              </li>
-            </ul>
-          </address>
+          <div class="split ">
+            <address>
+              <strong>Hos Kunden:</strong>
+              <ul class="noList">
+                <li><v-field title="Kunderepresentantens navn">Kundens Navn</v-field></li>
+                <li><v-field title="Kunderepresentantens stilling">Stilling</v-field></li>
+                <li><v-field title="Kunderepresentantens telefon">815 49 300</v-field></li>
+                <li>
+                  <v-field title="Kunderepresentantens epost" type="email"
+                    >kunde@selskap.no</v-field
+                  >
+                </li>
+              </ul>
+            </address>
 
-          <address>
-            <strong>Hos Leverandøren:</strong>
-            <ul class="noList">
-              <li>Odd Morten Sveås</li>
-              <li>Daglig leder</li>
-              <li>928 07 375</li>
-              <li>oms@variant.no</li>
-            </ul>
-          </address>
+            <address>
+              <strong>Hos Leverandøren:</strong>
+              <ul class="noList">
+                <li>Odd Morten Sveås</li>
+                <li>Daglig leder</li>
+                <li>928 07 375</li>
+                <li>oms@variant.no</li>
+              </ul>
+            </address>
+          </div>
 
           <h4>Nøkkelpersonell</h4>
           <p>
@@ -400,21 +402,14 @@
           <br />
 
           <strong>Faktura skal merkes med:</strong>
-          <ul class="noList">
-            <li>
-              Referansenummer:
-              <v-field title="Kundes refnr (Ikke obligatorisk)"
-                >Kundes refnr</v-field
-              >
-            </li>
-            <li>Navn: <v-field title="Kundens navn">Kundens Navn</v-field></li>
-            <li>
-              Fakturaadresse:
-              <v-field title="Kundens epost" type="email"
-                >kunde@selskap.no</v-field
-              >
-            </li>
-          </ul>
+          <dl>
+            <dt>Referansenummer:</dt>
+            <dd><v-field title="Fakturamerknad - refnr">Kundes refnr</v-field></dd>
+            <dt>Navn:</dt>
+            <dd><v-field title="Fakturamerknad - navn">Kundens Navn</v-field></li></dd>
+            <dt>Fakturaadresse:</dt>
+            <dd><v-field title="Fakturamerknad -  epost" type="email">kunde@selskap.no</v-field></dd>
+          </dl>
 
           <h3>Prisendring</h3>
 
