@@ -50,8 +50,8 @@
           </h1>
           <div>
             <strong>
-              <v-field title="Sted">Trondheim</v-field>
-              <v-field title="Startdato" type="date" format="formatDate">
+              <v-field title="Signeringssted">Trondheim</v-field>
+              <v-field title="Signeringsdato" type="date" format="formatDate">
                 2019-09-01
               </v-field>
             </strong>
@@ -76,11 +76,11 @@
             <address>
               <h3>Hos Kunden:</h3>
               <ul class="noList">
-                <li><v-field title="Kundens navn">Kundens Navn</v-field></li>
-                <li><v-field title="Kundens stilling">Stilling</v-field></li>
-                <li><v-field title="Kundens telefon">815 49 300</v-field></li>
+                <li><v-field title="Kunderepresentantens navn">Kundens Navn</v-field></li>
+                <li><v-field title="Kunderepresentantens stilling">Stilling</v-field></li>
+                <li><v-field title="Kunderepresentantens telefon">815 49 300</v-field></li>
                 <li>
-                  <v-field title="Kundens epost" type="email"
+                  <v-field title="Kunderepresentantens epost" type="email"
                     >kunde@selskap.no</v-field
                   >
                 </li>
@@ -111,10 +111,8 @@
 
           <h4>Beskrivelse av bistanden</h4>
           <v-field title="Beskrivelse av bistand" type="textarea"
-            >[Fyll inn beskrivelse av bistanden. Eks: Leverandøren bistår med et
-            team, bestående av en prosjektleder, 2 utviklere og 2 designere. De
-            skal levere produkt A. Eller Leverandøren bisår med en Senior
-            designer på 50%.]</v-field
+            >[Fyll inn beskrivelse av bistanden. Eks: Leverandøren bistår med et team, bestående av en prosjektleder, 2 utviklere og 2 designere. De
+ skal levere produkt A. Eller Leverandøren bisår med en Senior designer på 50%.]</v-field
           >
           <p>
             I den utstrekning Kunden ønsker det, skal Leverandøren også delta i
@@ -124,11 +122,11 @@
           <h4>Varighet</h4>
           <p>
             Oppdraget starter
-            <v-field title="Start dato" type="date" format="formatDate">
+            <v-field title="Oppstartsdato" type="date" format="formatDate">
               2019-01-30
             </v-field>
             og varer til
-            <v-field title="Slutt dato" type="date" format="formatDate">
+            <v-field title="Avslutningsdato" type="date" format="formatDate">
               2019-01-30 </v-field
             >.
           </p>
@@ -143,11 +141,11 @@
           <address>
             <strong>Hos Kunden:</strong>
             <ul class="noList">
-              <li><v-field title="Kundens navn">Kundens Navn</v-field></li>
-              <li><v-field title="Kundens stilling">Stilling</v-field></li>
-              <li><v-field title="Kundens telefon">815 49 300</v-field></li>
+              <li><v-field title="Kunderepresentantens navn">Kundens Navn</v-field></li>
+              <li><v-field title="Kunderepresentantens stilling">Stilling</v-field></li>
+              <li><v-field title="Kunderepresentantens telefon">815 49 300</v-field></li>
               <li>
-                <v-field title="Kundens epost" type="email"
+                <v-field title="Kunderepresentantens epost" type="email"
                   >kunde@selskap.no</v-field
                 >
               </li>
@@ -273,10 +271,10 @@
                 >Kundes refnr</v-field
               >
             </li>
-            <li>Navn: <v-field title="Kundens navn">Kundens Navn</v-field></li>
+            <li>Navn: <v-field title="Kunderepresentantens navn">Kundens Navn</v-field></li>
             <li>
               Fakturaadresse:
-              <v-field title="Kundens epost" type="email"
+              <v-field title="Kunderepresentantens epost" type="email"
                 >kunde@selskap.no</v-field
               >
             </li>
