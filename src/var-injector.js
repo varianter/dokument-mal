@@ -41,19 +41,27 @@ const ui = createUiFramework();
 const sel = document.querySelector.bind(document);
 const sela = document.querySelectorAll.bind(document);
 
-const modifiers = {
-  formatDate(i) {
+const modifiers = (function() {
+  function formatDate(i) {
     const options = {
       year: "numeric",
       month: "long",
       day: "numeric"
     };
     return new Date(i).toLocaleDateString("nb-NO", options);
-  },
-  identity(i) {
-    return i;
   }
-};
+
+  formatDate.unformat = function(str) {
+    return new Date(str).toISOString().split("T")[0];
+  };
+
+  return {
+    formatDate,
+    identity(i) {
+      return i;
+    }
+  };
+})();
 
 window.addEventListener("load", function() {
   insertCss();
@@ -104,7 +112,7 @@ function getObjectFromFields() {
 
 function formatInitialValues() {
   getFields().forEach(function updateDefaultValues(field) {
-    const formatter = getFormatter(field.getAttribute("format"));
+    const formatter = getFormatter(field);
     field.textContent = formatter(field.textContent);
   });
 }
@@ -117,7 +125,7 @@ function prefillCustomElementsWithQuery(fields, lists) {
     const data = defaultValues[slug];
 
     if (!slug || !data) return;
-    const formatter = getFormatter(field.getAttribute("format"));
+    const formatter = getFormatter(field);
     field.textContent = formatter(defaultValues[slug]);
   });
 
@@ -131,7 +139,7 @@ function prefillCustomElementsWithQuery(fields, lists) {
 function updateValue(field, value) {
   const title = field.getAttribute("title");
   getFieldsOfType(title).forEach(function(el) {
-    const formatter = getFormatter(el.getAttribute("format"));
+    const formatter = getFormatter(el);
     el.textContent = formatter(value);
   });
 }
@@ -140,7 +148,7 @@ function createRowInserter(parent) {
   return function(values) {
     const cloned = tr.cloneNode(true);
     Array.from(cloned.querySelectorAll(`v-item`)).forEach(function(el) {
-      const formatter = getFormatter(el.getAttribute("format"));
+      const formatter = getFormatter(el);
       el.textContent = formatter(values[slugify(el.title)]);
     });
     return cloned;
@@ -239,20 +247,31 @@ function constructListsInput(lists, update) {
       const slug = slugify(title);
       const id = `input-${listSlug}-${slug}-${i}`;
 
-      return div([
-        label({ for: id }, [title]),
-        input({
-          id: id,
-          name: `input-${listSlug}[${i}][${slug}]`,
-          type: field.getAttribute("type") || "text",
-          value: field.textContent,
-          required: true,
-          "data-slug": slug,
-          onInput() {
-            updateList();
-          }
-        })
-      ]);
+      const type = field.getAttribute("type") || "text";
+      const unformat = getUnformatter(field);
+      const value = unformat(field.textContent);
+
+      const opts = {
+        id: id,
+        name: `input-${listSlug}[${i}][${slug}]`,
+        required: true,
+        "data-slug": slug,
+        onInput() {
+          updateList();
+        }
+      };
+
+      const el =
+        type === "textarea"
+          ? textarea(opts, [value])
+          : input(
+              Object.assign({}, opts, {
+                type,
+                value
+              })
+            );
+
+      return div([label({ for: id }, [title]), el]);
     }
 
     let items = isFirst => {
@@ -309,6 +328,8 @@ function createConstructInputLi(cb) {
     const id = "input-" + slug;
 
     const type = field.getAttribute("type") || "text";
+    const unformat = getUnformatter(field);
+    const value = unformat(field.textContent);
 
     const opts = {
       name: id,
@@ -321,11 +342,11 @@ function createConstructInputLi(cb) {
 
     const el =
       type === "textarea"
-        ? textarea(opts, [field.textContent])
+        ? textarea(opts, [value])
         : input(
             Object.assign({}, opts, {
-              type: field.getAttribute("type") || "text",
-              value: field.textContent
+              type,
+              value
             })
           );
 
@@ -333,7 +354,18 @@ function createConstructInputLi(cb) {
   };
 }
 
-function getFormatter(name) {
+function getUnformatter(field) {
+  const formatter = getFormatter(field);
+  if (formatter.unformat) return formatter.unformat;
+  return modifiers.identity;
+}
+
+function getFormatter(el) {
+  const name = el.getAttribute("format");
+  const modifierName = modifiers[name] ? name : "identity";
+  return modifiers[modifierName];
+}
+function getUnFormatter(name) {
   const modifierName = modifiers[name] ? name : "identity";
   return modifiers[modifierName];
 }
