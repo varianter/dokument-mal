@@ -57,13 +57,14 @@ const modifiers = {
 
 window.addEventListener("load", function() {
   insertCss();
+  formatInitialValues();
 
   const main = sel("main");
 
   const logo = createLogo();
   main.querySelector("article").appendChild(logo);
 
-  const fields = getFields(main);
+  const fields = getFields();
   const lists = getLists();
   prefillCustomElementsWithQuery(fields, lists);
 
@@ -101,13 +102,21 @@ function getObjectFromFields() {
   return obj;
 }
 
+function formatInitialValues() {
+  getFields().forEach(function updateDefaultValues(field) {
+    const formatter = getFormatter(field.getAttribute("format"));
+    field.textContent = formatter(field.textContent);
+  });
+}
+
 function prefillCustomElementsWithQuery(fields, lists) {
   const defaultValues = queryToObject();
   fields.forEach(function updateDefaultValues(field) {
     const slug = "input-" + slugify(field.getAttribute("title"));
     const data = defaultValues[slug];
     if (!slug || !data) return;
-    field.textContent = defaultValues[slug];
+    const formatter = getFormatter(field.getAttribute("format"));
+    field.textContent = formatter(defaultValues[slug]);
   });
   lists.forEach(function updateDefaultValues(list) {
     const title = list.getAttribute("data-title");
@@ -305,8 +314,7 @@ function createConstructInputLi(cb) {
         value: field.textContent,
         required: true,
         onInput(e) {
-          const val = e.currentTarget.value;
-          cb(field, val);
+          cb(field, e.currentTarget.value);
         }
       })
     ]);
