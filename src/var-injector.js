@@ -111,13 +111,16 @@ function formatInitialValues() {
 
 function prefillCustomElementsWithQuery(fields, lists) {
   const defaultValues = queryToObject();
+
   fields.forEach(function updateDefaultValues(field) {
     const slug = "input-" + slugify(field.getAttribute("title"));
     const data = defaultValues[slug];
+
     if (!slug || !data) return;
     const formatter = getFormatter(field.getAttribute("format"));
     field.textContent = formatter(defaultValues[slug]);
   });
+
   lists.forEach(function updateDefaultValues(list) {
     const title = list.getAttribute("data-title");
     const slug = slugify(title);
@@ -299,25 +302,34 @@ function createValuesFromLoop(fieldset) {
 }
 
 function createConstructInputLi(cb) {
-  const { li, input, label } = ui;
+  const { li, input, textarea, label } = ui;
   return function(field) {
     const title = field.getAttribute("title");
     const slug = slugify(title);
     const id = "input-" + slug;
 
-    return li([
-      label({ for: id }, [title]),
-      input({
-        name: id,
-        id,
-        type: field.getAttribute("type") || "text",
-        value: field.textContent,
-        required: true,
-        onInput(e) {
-          cb(field, e.currentTarget.value);
-        }
-      })
-    ]);
+    const type = field.getAttribute("type") || "text";
+
+    const opts = {
+      name: id,
+      id,
+      required: true,
+      onInput(e) {
+        cb(field, e.currentTarget.value);
+      }
+    };
+
+    const el =
+      type === "textarea"
+        ? textarea(opts, [field.textContent])
+        : input(
+            Object.assign({}, opts, {
+              type: field.getAttribute("type") || "text",
+              value: field.textContent
+            })
+          );
+
+    return li([label({ for: id }, [title]), el]);
   };
 }
 
