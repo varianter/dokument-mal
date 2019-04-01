@@ -161,7 +161,7 @@ table {
 }
 table td,
 table th {
-  padding: 0;
+  padding: 0 1rem 0 0;
   line-height: 33px;
 }
 thead {
