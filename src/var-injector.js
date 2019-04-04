@@ -52,7 +52,9 @@ const modifiers = (function() {
   }
 
   formatDate.unformat = function(str) {
-    return new Date(str).toISOString().split("T")[0];
+    var d = new Date(str);
+    d.setHours(6);
+    return d.toISOString().split("T")[0];
   };
 
   return {
