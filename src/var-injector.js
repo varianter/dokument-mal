@@ -124,7 +124,7 @@ function prefillCustomElementsWithQuery(fields, lists) {
     const slug = "input-" + slugify(field.getAttribute("title"));
     const data = defaultValues[slug];
 
-    if (!slug || !data) return;
+    if (!slug || typeof data === "undefined") return;
     const formatter = getFormatter(field);
     field.textContent = formatter(defaultValues[slug]);
   });
@@ -444,7 +444,7 @@ function isInContainer(el, container) {
 function objectToUrl(obj) {
   const params = new URLSearchParams();
   for (let key of Object.keys(obj)) {
-    if (obj[key]) params.set(key, obj[key]);
+    params.set(key, obj[key]);
   }
   return getUrl() + "?" + params.toString();
 }
@@ -485,6 +485,7 @@ function queryToObject() {
     if (typeof obj[key] !== "object") continue;
     obj[key] = Object.keys(obj[key]).map(k => obj[key][k]);
   }
+
   return obj;
 }
 
