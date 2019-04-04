@@ -156,13 +156,14 @@ table {
   border-spacing: 0px;
   border-collapse: collapse;
   text-align: left;
-  max-width: 60vw;
+  max-width: 100%;
   min-width: 30vw;
 }
 table td,
 table th {
-  padding: 0 1rem 0 0;
-  line-height: 33px;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  word-break: break-word;
+  hyphens: auto;
 }
 thead {
   border-bottom: 1px solid #000;
