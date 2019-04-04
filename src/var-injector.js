@@ -95,7 +95,7 @@ function getLists() {
 function getFields() {
   return Array.from(sela("v-field"));
 }
-function getInputs(els = sela("input")) {
+function getInputs(els = sela("input, textarea")) {
   return Array.from(els).filter(i => i.id.indexOf("input-") === 0);
 }
 function getFieldsOfType(selector) {
@@ -313,7 +313,7 @@ function constructListsInput(lists, update) {
 
 function createValuesFromLoop(fieldset) {
   return Array.from(fieldset.querySelectorAll("li")).map(function(row) {
-    const inputs = getInputs(row.querySelectorAll("input"));
+    const inputs = getInputs(row.querySelectorAll("input, textarea"));
     const obj = {};
     for (let item of inputs) {
       obj[item.getAttribute("data-slug")] = item.value;
