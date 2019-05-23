@@ -52,7 +52,8 @@ const modifiers = (function() {
   }
 
   formatDate.unformat = function(str) {
-    var d = new Date(str);
+    const d = new Date(translateMonths(str));
+    if (isNaN(d.getTime())) return str;
     d.setHours(6);
     return d.toISOString().split("T")[0];
   };
@@ -419,6 +420,7 @@ function createLogo() {
 
 function updateUrlBox() {
   const updateBox = document.querySelector("#urlbox");
+
   const data = getObjectFromFields();
   const url = objectToUrl(data);
   updateBox.value = url;
@@ -508,4 +510,26 @@ function emptyNode(node) {
     node.removeChild(node.firstChild);
   }
   return node;
+}
+
+const months = [
+  ["januar", "jan"],
+  ["februar", "feb"],
+  ["mars", "mar"],
+  ["april", "apr"],
+  ["mai", "may"],
+  ["juni", "jun"],
+  ["juli", "jul"],
+  ["august", "aug"],
+  ["september", "sep"],
+  ["oktober", "oct"],
+  ["november", "nov"],
+  ["desember", "dec"]
+];
+function translateMonths(str) {
+  let lowerCase = str.toLowerCase();
+  months.forEach(function([from, to]) {
+    lowerCase = lowerCase.replace(from, to);
+  });
+  return lowerCase;
 }
