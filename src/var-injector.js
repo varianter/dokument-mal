@@ -277,14 +277,22 @@ function constructListsInput(lists, update) {
       return div([label({ for: id }, [title]), el]);
     }
 
-    let items = isFirst => {
-      const trs = list.querySelectorAll("tr");
-      const len = isFirst ? 0 : trs.length;
-      return Array.from(trs[0].querySelectorAll("v-item")).map(d =>
+    let inputRow = (row, len) => {
+      return Array.from(row.querySelectorAll("v-item")).map(d =>
         createItem(d, len)
       );
     };
-    const rows = ul([inputLi(items(true))]);
+    let items = isFirst => {
+      const trs = list.querySelectorAll("tr");
+      const len = isFirst ? 0 : trs.length;
+      return inputRow(trs[0], len);
+    };
+    let rowsFromInitialLoad = Array.from(list.querySelectorAll("tr"))
+      .slice(1)
+      .map((d, i) => inputRow(d, i + 1))
+      .map(inputLi);
+
+    const rows = ul([inputLi(items(true)), ...rowsFromInitialLoad]);
 
     function newRow() {
       rows.appendChild(removable(items()));
