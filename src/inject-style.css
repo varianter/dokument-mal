@@ -31,7 +31,7 @@
   right: 0;
   left: 0;
   width: 100%;
-  background: #33333d;
+  background: #33333ddd;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   overflow: hidden;
 
@@ -40,7 +40,6 @@
 
   color: #fff;
   z-index: 9999;
-  opacity: 0.9;
 }
 .var-injector--open {
   overflow: auto;
@@ -69,7 +68,7 @@
   transition: background 150ms ease-in;
 }
 .var-injector .toggleButton:hover {
-  background: #ddddd355;
+  background: #2a2a2a;
 }
 .var-injector .toggleButton img {
   display: block;
@@ -122,7 +121,8 @@
   font-size: 16px;
 }
 
-.var-injector input {
+.var-injector input,
+.var-injector textarea {
   font-family: Arial, Helvetica, sans-serif;
 
   margin: 0;
@@ -134,6 +134,9 @@
   border-radius: 0;
 
   line-height: 1;
+}
+.var-injector textarea {
+  resize: vertical;
 }
 .var-injector input[type="date"]::-webkit-inner-spin-button {
   display: none;

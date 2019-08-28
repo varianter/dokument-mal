@@ -64,7 +64,8 @@ ul ul,
 ol ul,
 ul ol,
 ol ol,
-dt, dd {
+dt,
+dd {
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -74,8 +75,12 @@ dl {
   grid-template-rows: minmax(min-content, max-content);
   grid-gap: 0.4rem 0.5rem;
 }
-dt{ grid-column: 1; }
-dd{ grid-column: 2;  }
+dt {
+  grid-column: 1;
+}
+dd {
+  grid-column: 2;
+}
 
 blockquote {
   line-height: 1.5rem;
@@ -151,14 +156,14 @@ table {
   border-spacing: 0px;
   border-collapse: collapse;
   text-align: left;
-  width: 40%;
-  max-width: 60vw;
+  max-width: 100%;
   min-width: 30vw;
 }
 table td,
 table th {
-  padding: 0;
-  line-height: 33px;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  word-break: break-word;
+  hyphens: auto;
 }
 thead {
   border-bottom: 1px solid #000;

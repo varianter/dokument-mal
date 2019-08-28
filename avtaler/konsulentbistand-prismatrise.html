@@ -63,8 +63,8 @@
               <v-field title="Kunde">Kunde</v-field>
             </div>
             <div>
-              <h3>Odd Morten Sveås</h3>
-              <div>Variant</div>
+              <h3><v-field title="Variants ansvarlige -  navn">Odd Morten Sveås</v-field></h3>
+              <div>Variant AS</div>
             </div>
           </div>
 
@@ -90,10 +90,12 @@
             <address>
               <h3>Hos Leverandøren:</h3>
               <ul class="noList">
-                <li>Odd Morten Sveås</li>
-                <li>Daglig leder</li>
-                <li>928 07 375</li>
-                <li>oms@variant.no</li>
+                <li><v-field title="Variants ansvarlige -  navn">Odd Morten Sveås</v-field></li>
+                <li><v-field title="Variants ansvarlige -  stilling">Daglig leder</v-field></li>
+                <li><v-field title="Variants ansvarlige -  telefon">928 07 375‬</v-field></li>
+                <li>
+                  <v-field title="Variants ansvarlige -  epost" type="email"
+                    >oms@variant.no</v-field>
               </ul>
             </address>
           </div>
@@ -129,8 +131,9 @@
             </v-field>
             og varer til
             <v-field title="Avslutningsdato" type="date" format="formatDate">
-              2019-01-30 </v-field
-            >.
+              2019-01-30 </v-field>. 
+              Avtalen kan på kundes forespørsel forlenges. Slik forlengelse 
+            krever begge parters skriftlige samtykke.
           </p>
 
           <h4>Partenes representanter</h4>
@@ -158,10 +161,12 @@
             <address>
               <strong>Hos Leverandøren:</strong>
               <ul class="noList">
-                <li>Odd Morten Sveås</li>
-                <li>Daglig leder</li>
-                <li>928 07 375</li>
-                <li>oms@variant.no</li>
+                <li><v-field title="Variants representant -  navn">Odd Morten Sveås</v-field></li>
+                <li><v-field title="Variants representant -  stilling">Daglig leder</v-field></li>
+                <li><v-field title="Variants representant -  telefon">928 07 375‬</v-field></li>
+                <li>
+                  <v-field title="Variants representant -  epost" type="email"
+                    >oms@variant.no</v-field>
               </ul>
             </address>
           </div>
@@ -172,17 +177,21 @@
             bistanden er gitt av tabellen under.
           </p>
 
-          <table>
+          <table class="ressurser">
             <thead>
               <tr>
                 <th>Ressurs</th>
                 <th>Kategori</th>
+                <th>Stilling</th>
               </tr>
             </thead>
             <tbody data-vloop data-title="Nøkkelpersonell">
               <tr>
                 <td>
                   <v-item title="Navn">Konsulent</v-item>
+                </td>
+                <td>
+                  <v-item title="Kategori">Kategori</v-item>
                 </td>
                 <td>
                   <v-item title="Stilling">Stilling</v-item>
@@ -192,9 +201,11 @@
           </table>
 
           <p>
-            Oppdragets art er av den beskaffenhet at det kan være hensiktsmessig
+            <v-field title="Ressurslaantext" type="textarea"
+            >[Oppdragets art er av den beskaffenhet at det kan være hensiktsmessig
             å dra veksler på andre ressurser hos Leverandøren. Andre ressurser
-            kan derfor bistå Kunden etter avtale med Kunden.
+            kan derfor bistå Kunden etter avtale med Kunden.]</v-field
+          >
           </p>
           <p>
             Skifte av nøkkelpersonell hos Leverandøren skal godkjennes av
@@ -344,31 +355,62 @@
           <table>
             <thead>
               <tr>
-                <th>Ressurs</th>
+                <th>Kategori</th>
                 <th>Timepris</th>
+                <th><v-field title="Timeprisrabatt-tittel">Rabattert (*)</v-field></th>
               </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>
+                      <v-field title="Kategori 1">Juniorkonsulent</v-field>
+                    </td>
+                    <td class="number">
+                      <v-field title="Timepris 1a">900</v-field>
+                    </td>
+                    <td class="number">
+                        <v-field title="Timepris 1b">850</v-field>
+                    </td>
+                  </tr>
               <tr>
-                <td>Seniorkonsulent</td>
                 <td>
-                  <v-field title="Timepris seniorkonsulent">1 200</v-field>
+                  <v-field title="Kategori 2">Konsulent</v-field>
+                </td>
+                <td class="number">
+                  <v-field title="Timepris 2a">1050</v-field>
+                </td>
+                <td class="number">
+                    <v-field title="Timepris 2b">1000</v-field>
                 </td>
               </tr>
               <tr>
-                <td>Konsulent</td>
-                <td><v-field title="Timepris konsulent">1 050</v-field></td>
+                <td>
+                  <v-field title="Kategori 3">Seniorkonsulent</v-field>
+                </td>
+                <td class="number">
+                  <v-field title="Timepris 3a">1200</v-field>
+                </td>
+                <td class="number">
+                    <v-field title="Timepris 3b">1150</v-field>
+                </td>
               </tr>
               <tr>
-                <td>Juniorkonsulent</td>
                 <td>
-                  <v-field title="Timepris juniorkonsulent">900</v-field>
+                  <v-field title="Kategori 4">Ekspert</v-field>
+                </td>
+                <td class="number">
+                  <v-field title="Timepris 4a">1350</v-field>
+                </td>
+                <td class="number">
+                    <v-field title="Timepris 4b">1290</v-field>
                 </td>
               </tr>
             </tbody>
           </table>
-          <small>(Pris er eks. mva)</small>
-
+          <small>
+            (Pris er eks. mva)<br>
+            <v-field title="Timeprisrabatt-beskrivelse">(*) Rabattert timesats gjelder oppdrag med varighet lengre enn 6 mnd.</v-field>
+          </small>
           <p>
             Utlegg, inklusive reise- og diettkostnader, dekkes bare i den grad
             de er avtalt. Reise- og diettkostnader skal spesifiseres særskilt,
@@ -395,7 +437,7 @@
           <br />
 
           <p>
-            Betaling skal skje i henhold til faktura per 15 (femten)
+            Betaling skal skje i henhold til faktura per <v-field title="Faktura betalingstid">15 (femten)</v-field>
             kalenderdager.
           </p>
 
@@ -507,8 +549,8 @@
             avtalen med skriftlig samtykke fra kunden. Dette gjelder også hvis
             Leverandøren deles i flere selskaper, eller hvis overdragelsen skjer
             til et datterselskap eller annet selskap i samme konsern, men ikke
-            hvis Leverandøren slår seg sammen med et annet selskap. Samtykke kan
-            ikke nektes uten saklig grunn.
+            hvis Leverandøren slår seg sammen med et annet selskap. 
+            <v-field title="Overdragelse samtykke">Samtykke kan ikke nektes uten saklig grunn.</v-field>
           </p>
           <p>
             Retten til overdragelse i avsnittet over gjelder kun hvis den nye

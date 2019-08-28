@@ -41,19 +41,30 @@ const ui = createUiFramework();
 const sel = document.querySelector.bind(document);
 const sela = document.querySelectorAll.bind(document);
 
-const modifiers = {
-  formatDate(i) {
+const modifiers = (function() {
+  function formatDate(i) {
     const options = {
       year: "numeric",
       month: "long",
       day: "numeric"
     };
     return new Date(i).toLocaleDateString("nb-NO", options);
-  },
-  identity(i) {
-    return i;
   }
-};
+
+  formatDate.unformat = function(str) {
+    const d = new Date(translateMonths(str));
+    if (isNaN(d.getTime())) return str;
+    d.setHours(6);
+    return d.toISOString().split("T")[0];
+  };
+
+  return {
+    formatDate,
+    identity(i) {
+      return i;
+    }
+  };
+})();
 
 window.addEventListener("load", function() {
   insertCss();
@@ -85,7 +96,7 @@ function getLists() {
 function getFields() {
   return Array.from(sela("v-field"));
 }
-function getInputs(els = sela("input")) {
+function getInputs(els = sela("input, textarea")) {
   return Array.from(els).filter(i => i.id.indexOf("input-") === 0);
 }
 function getFieldsOfType(selector) {
@@ -104,20 +115,23 @@ function getObjectFromFields() {
 
 function formatInitialValues() {
   getFields().forEach(function updateDefaultValues(field) {
-    const formatter = getFormatter(field.getAttribute("format"));
+    const formatter = getFormatter(field);
     field.textContent = formatter(field.textContent);
   });
 }
 
 function prefillCustomElementsWithQuery(fields, lists) {
   const defaultValues = queryToObject();
+
   fields.forEach(function updateDefaultValues(field) {
     const slug = "input-" + slugify(field.getAttribute("title"));
     const data = defaultValues[slug];
-    if (!slug || !data) return;
-    const formatter = getFormatter(field.getAttribute("format"));
+
+    if (!slug || typeof data === "undefined") return;
+    const formatter = getFormatter(field);
     field.textContent = formatter(defaultValues[slug]);
   });
+
   lists.forEach(function updateDefaultValues(list) {
     const title = list.getAttribute("data-title");
     const slug = slugify(title);
@@ -128,7 +142,7 @@ function prefillCustomElementsWithQuery(fields, lists) {
 function updateValue(field, value) {
   const title = field.getAttribute("title");
   getFieldsOfType(title).forEach(function(el) {
-    const formatter = getFormatter(el.getAttribute("format"));
+    const formatter = getFormatter(el);
     el.textContent = formatter(value);
   });
 }
@@ -137,7 +151,7 @@ function createRowInserter(parent) {
   return function(values) {
     const cloned = tr.cloneNode(true);
     Array.from(cloned.querySelectorAll(`v-item`)).forEach(function(el) {
-      const formatter = getFormatter(el.getAttribute("format"));
+      const formatter = getFormatter(el);
       el.textContent = formatter(values[slugify(el.title)]);
     });
     return cloned;
@@ -236,30 +250,49 @@ function constructListsInput(lists, update) {
       const slug = slugify(title);
       const id = `input-${listSlug}-${slug}-${i}`;
 
-      return div([
-        label({ for: id }, [title]),
-        input({
-          id: id,
-          name: `input-${listSlug}[${i}][${slug}]`,
-          type: field.getAttribute("type") || "text",
-          value: field.textContent,
-          required: true,
-          "data-slug": slug,
-          onInput() {
-            updateList();
-          }
-        })
-      ]);
+      const type = field.getAttribute("type") || "text";
+      const unformat = getUnformatter(field);
+      const value = unformat(field.textContent);
+
+      const opts = {
+        id: id,
+        name: `input-${listSlug}[${i}][${slug}]`,
+        required: true,
+        "data-slug": slug,
+        onInput() {
+          updateList();
+        }
+      };
+
+      const el =
+        type === "textarea"
+          ? textarea(opts, [value])
+          : input(
+              Object.assign({}, opts, {
+                type,
+                value
+              })
+            );
+
+      return div([label({ for: id }, [title]), el]);
     }
 
-    let items = isFirst => {
-      const trs = list.querySelectorAll("tr");
-      const len = isFirst ? 0 : trs.length;
-      return Array.from(trs[0].querySelectorAll("v-item")).map(d =>
+    let inputRow = (row, len) => {
+      return Array.from(row.querySelectorAll("v-item")).map(d =>
         createItem(d, len)
       );
     };
-    const rows = ul([inputLi(items(true))]);
+    let items = isFirst => {
+      const trs = list.querySelectorAll("tr");
+      const len = isFirst ? 0 : trs.length;
+      return inputRow(trs[0], len);
+    };
+    let rowsFromInitialLoad = Array.from(list.querySelectorAll("tr"))
+      .slice(1)
+      .map((d, i) => inputRow(d, i + 1))
+      .map(inputLi);
+
+    const rows = ul([inputLi(items(true)), ...rowsFromInitialLoad]);
 
     function newRow() {
       rows.appendChild(removable(items()));
@@ -289,7 +322,7 @@ function constructListsInput(lists, update) {
 
 function createValuesFromLoop(fieldset) {
   return Array.from(fieldset.querySelectorAll("li")).map(function(row) {
-    const inputs = getInputs(row.querySelectorAll("input"));
+    const inputs = getInputs(row.querySelectorAll("input, textarea"));
     const obj = {};
     for (let item of inputs) {
       obj[item.getAttribute("data-slug")] = item.value;
@@ -299,29 +332,51 @@ function createValuesFromLoop(fieldset) {
 }
 
 function createConstructInputLi(cb) {
-  const { li, input, label } = ui;
+  const { li, input, textarea, label } = ui;
   return function(field) {
     const title = field.getAttribute("title");
     const slug = slugify(title);
     const id = "input-" + slug;
 
-    return li([
-      label({ for: id }, [title]),
-      input({
-        name: id,
-        id,
-        type: field.getAttribute("type") || "text",
-        value: field.textContent,
-        required: true,
-        onInput(e) {
-          cb(field, e.currentTarget.value);
-        }
-      })
-    ]);
+    const type = field.getAttribute("type") || "text";
+    const unformat = getUnformatter(field);
+    const value = unformat(field.textContent);
+
+    const opts = {
+      name: id,
+      id,
+      required: true,
+      onInput(e) {
+        cb(field, e.currentTarget.value);
+      }
+    };
+
+    const el =
+      type === "textarea"
+        ? textarea(opts, [value])
+        : input(
+            Object.assign({}, opts, {
+              type,
+              value
+            })
+          );
+
+    return li([label({ for: id }, [title]), el]);
   };
 }
 
-function getFormatter(name) {
+function getUnformatter(field) {
+  const formatter = getFormatter(field);
+  if (formatter.unformat) return formatter.unformat;
+  return modifiers.identity;
+}
+
+function getFormatter(el) {
+  const name = el.getAttribute("format");
+  const modifierName = modifiers[name] ? name : "identity";
+  return modifiers[modifierName];
+}
+function getUnFormatter(name) {
   const modifierName = modifiers[name] ? name : "identity";
   return modifiers[modifierName];
 }
@@ -373,6 +428,7 @@ function createLogo() {
 
 function updateUrlBox() {
   const updateBox = document.querySelector("#urlbox");
+
   const data = getObjectFromFields();
   const url = objectToUrl(data);
   updateBox.value = url;
@@ -400,7 +456,7 @@ function isInContainer(el, container) {
 function objectToUrl(obj) {
   const params = new URLSearchParams();
   for (let key of Object.keys(obj)) {
-    if (obj[key]) params.set(key, obj[key]);
+    params.set(key, obj[key]);
   }
   return getUrl() + "?" + params.toString();
 }
@@ -441,6 +497,7 @@ function queryToObject() {
     if (typeof obj[key] !== "object") continue;
     obj[key] = Object.keys(obj[key]).map(k => obj[key][k]);
   }
+
   return obj;
 }
 
@@ -461,4 +518,26 @@ function emptyNode(node) {
     node.removeChild(node.firstChild);
   }
   return node;
+}
+
+const months = [
+  ["januar", "jan"],
+  ["februar", "feb"],
+  ["mars", "mar"],
+  ["april", "apr"],
+  ["mai", "may"],
+  ["juni", "jun"],
+  ["juli", "jul"],
+  ["august", "aug"],
+  ["september", "sep"],
+  ["oktober", "oct"],
+  ["november", "nov"],
+  ["desember", "dec"]
+];
+function translateMonths(str) {
+  let lowerCase = str.toLowerCase();
+  months.forEach(function([from, to]) {
+    lowerCase = lowerCase.replace(from, to);
+  });
+  return lowerCase;
 }
