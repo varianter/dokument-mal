@@ -136,7 +136,7 @@
             varsel. Ved avbestilling før bistanden er fullført skal Kunden
             betale det beløp Leverandøren har til gode for allerede utført arbeid.
           </p>
-
+          
           <h4>Partenes representanter</h4>
           <p>
             Hver av partene skal ved inngåelsen av avtalen oppnevne en
@@ -208,7 +208,7 @@
 
         <section>
           <h2>Vederlag og betalingsbetingelser</h2>
-          <h3>Vederlag</h3>
+          <h3>Timepriser</h3>
 
           <p>
             Vederlag for bistanden bregnes etter medgått tid, og med fast
@@ -218,26 +218,32 @@
           <table>
             <thead>
               <tr>
-                <th>Ressurs</th>
+                <th>Kategori</th>
                 <th class="number">Timepris</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>Spesialist</td>
+                <td class="number">
+                  <v-field title="Timepris spesialist">1 400</v-field>
+                </td>
+              </tr>
+              <tr>
                 <td>Seniorkonsulent</td>
                 <td class="number">
-                  <v-field title="Timepris seniorkonsulent">1 200</v-field>
+                  <v-field title="Timepris seniorkonsulent">1 250</v-field>
                 </td>
               </tr>
               <tr>
                 <td>Konsulent</td>
                 <td class="number">
-                  <v-field title="Timepris konsulent">1 050</v-field></td>
+                  <v-field title="Timepris konsulent">1 150</v-field></td>
               </tr>
               <tr>
                 <td>Juniorkonsulent</td>
                 <td class="number">
-                  <v-field title="Timepris juniorkonsulent">900</v-field>
+                  <v-field title="Timepris juniorkonsulent">1000</v-field>
                 </td>
               </tr>
             </tbody>
@@ -249,6 +255,49 @@
             de er avtalt. Reise- og diettkostnader skal spesifiseres særskilt,
             og dekkes etter statens gjeldende satser.
           </p>
+
+          <h3>Rabatterte timepriser</h3>
+
+          <p>
+            Ved langvarige oppdrag, dvs oppdrag som varer lengre enn 6 måneder, og hvor konsulenten er engasjert i 
+            full stilling benyttes rabatterte timepriser gitt av tabellen under. 
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Kategori</th>
+                <th class="number">Timepris</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Spesialist</td>
+                <td class="number">
+                  <v-field title="Rabattert timepris spesialist">1 350</v-field>
+                </td>
+              </tr>
+              <tr>
+                <td>Seniorkonsulent</td>
+                <td class="number">
+                  <v-field title="Rabattert timepris seniorkonsulent">1 200</v-field>
+                </td>
+              </tr>
+              <tr>
+                <td>Konsulent</td>
+                <td class="number">
+                  <v-field title="Rabattert timepris konsulent">1 100</v-field></td>
+              </tr>
+              <tr>
+                <td>Juniorkonsulent</td>
+                <td class="number">
+                  <v-field title="Rabattert timepris juniorkonsulent">950</v-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <small>(Pris er eks. mva)</small>
+
 
           <h3>Fakturering</h3>
           <p>
