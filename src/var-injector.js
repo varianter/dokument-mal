@@ -6,7 +6,11 @@ function createUiFramework() {
       if (isEvent(k)) {
         el.addEventListener(eventName(k), obj[k]);
       } else if (k !== "class") {
-        el.setAttribute(k, obj[k]);
+        if (obj[k] === true) {
+          el.setAttribute(k, k);
+        } else if (obj[k] !== false) {
+          el.setAttribute(k, obj[k]);
+        }
       } else {
         const classes = Array.isArray(obj[k]) ? obj[k] : [obj[k]];
         el.classList.add(...classes);
@@ -94,13 +98,15 @@ function getLists() {
   return Array.from(sela("[data-vloop]"));
 }
 function getFields() {
-  return Array.from(sela("v-field"));
+  return Array.from(sela("v-field, v-if"));
 }
 function getInputs(els = sela("input, textarea")) {
   return Array.from(els).filter(i => i.id.indexOf("input-") === 0);
 }
 function getFieldsOfType(selector) {
-  return Array.from(sela(`v-field[title='${selector}']`));
+  return Array.from(
+    sela(`v-field[title='${selector}'], v-if[title='${selector}']`)
+  );
 }
 function getLoopsOfType(selector) {
   return Array.from(sela(`[data-vloop][data-title="${selector}"]`));
@@ -108,28 +114,52 @@ function getLoopsOfType(selector) {
 function getObjectFromFields() {
   let obj = {};
   for (let field of getInputs()) {
-    obj[field.name] = field.value;
+    if (field.type === "checkbox") {
+      obj[field.name] = field.checked;
+    } else {
+      obj[field.name] = field.value;
+    }
   }
   return obj;
 }
 
+function setValue(field, value) {
+  if (field.nodeName === "V-IF") {
+    field.style.display = value ? "block" : "none";
+  } else {
+    const formatter = getFormatter(field);
+    field.textContent = formatter(value);
+  }
+}
+
 function formatInitialValues() {
   getFields().forEach(function updateDefaultValues(field) {
-    const formatter = getFormatter(field);
-    field.textContent = formatter(field.textContent);
+    if (field.nodeName === "V-IF") {
+      let val = toBoolean(
+        field.hasAttribute("default") ? field.getAttribute("default") : "true"
+      );
+      field.style.display = val ? "block" : "none";
+    } else {
+      const formatter = getFormatter(field);
+      field.textContent = formatter(field.textContent);
+    }
   });
 }
 
 function prefillCustomElementsWithQuery(fields, lists) {
   const defaultValues = queryToObject();
+  console.log("V-IF", defaultValues);
 
   fields.forEach(function updateDefaultValues(field) {
     const slug = "input-" + slugify(field.getAttribute("title"));
     const data = defaultValues[slug];
 
     if (!slug || typeof data === "undefined") return;
-    const formatter = getFormatter(field);
-    field.textContent = formatter(defaultValues[slug]);
+    setValue(field, defaultValues[slug]);
+
+    if (field.nodeName === "V-IF") {
+      field.setAttribute("with-seed", defaultValues[slug]);
+    }
   });
 
   lists.forEach(function updateDefaultValues(list) {
@@ -142,8 +172,7 @@ function prefillCustomElementsWithQuery(fields, lists) {
 function updateValue(field, value) {
   const title = field.getAttribute("title");
   getFieldsOfType(title).forEach(function(el) {
-    const formatter = getFormatter(el);
-    el.textContent = formatter(value);
+    setValue(el, value);
   });
 }
 function createRowInserter(parent) {
@@ -338,7 +367,17 @@ function createConstructInputLi(cb) {
     const slug = slugify(title);
     const id = "input-" + slug;
 
-    const type = field.getAttribute("type") || "text";
+    const isCheckbox = field.nodeName === "V-IF";
+    const hasDefault = field.hasAttribute("default");
+
+    let defaultCheckboxValue = !isCheckbox
+      ? undefined
+      : toBoolean(hasDefault ? field.getAttribute("default") : "true");
+    if (field.hasAttribute("with-seed")) {
+      defaultCheckboxValue = toBoolean(field.getAttribute("with-seed"));
+    }
+
+    const type = isCheckbox ? "checkbox" : field.getAttribute("type") || "text";
     const unformat = getUnformatter(field);
     const value = unformat(field.textContent);
 
@@ -346,8 +385,13 @@ function createConstructInputLi(cb) {
       name: id,
       id,
       required: true,
+      checked: defaultCheckboxValue,
       onInput(e) {
-        cb(field, e.currentTarget.value);
+        if (isCheckbox) {
+          cb(field, e.currentTarget.checked);
+        } else {
+          cb(field, e.currentTarget.value);
+        }
       }
     };
 
@@ -473,13 +517,24 @@ function slugify(str) {
     .replace(/[\s\W-]+/g, "-");
 }
 
+function toBoolean(val) {
+  if (val === "true") {
+    return true;
+  }
+  return false;
+}
+
 function queryToObject() {
   const params = new URLSearchParams(document.location.search);
   let obj = {};
   for (let [key, val] of params) {
     const metadata = getPath(key);
     if (!metadata) {
-      obj[key] = val;
+      if (val === "true" || val === "false") {
+        obj[key] = toBoolean(val);
+      } else {
+        obj[key] = val;
+      }
     } else {
       if (!obj[metadata.base]) {
         obj[metadata.base] = {};
@@ -488,7 +543,12 @@ function queryToObject() {
       if (!obj[metadata.base][metadata.index]) {
         obj[metadata.base][metadata.index] = {};
       }
-      obj[metadata.base][metadata.index][metadata.name] = val;
+
+      if (val === "true" || val === "false") {
+        obj[metadata.base][metadata.index][metadata.name] = toBoolean(val);
+      } else {
+        obj[metadata.base][metadata.index][metadata.name] = val;
+      }
     }
   }
 
