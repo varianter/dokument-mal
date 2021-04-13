@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../src/paper.css" />
+    <title>Erhverv av aksjer</title>
+
+    <link rel="shortcut icon" href="../assets/favicon.png" type="image/png" />
+
+    <style>
+      /* Document specific styling here */
+      h2::before, h3::before, h4::before {
+        content: "";
+      }
+
+    </style>
+  </head>
+  <body>
+    <main>
+      <article>
+        <section>
+          <h1 class="">
+            <strong>Avtale om erhverv av aksjer i <v-field title="Selskapsnavn">Variant AS</v-field></strong>
+          </h1>
+        </section>
+        <section>
+            <p>
+                Denne avtalen ("Avtalen") om kjøp av aksjer i <v-field title="Selskapsnavn">Variant AS, orgnr 920 933 408</v-field> ("Selskapet") er i dag inngått mellom:
+                
+                <v-field title="Selgernavn">Variant Konsern AS, orgnr 123 456 789</v-field>, "Selger"
+
+                og
+
+                <v-field title="Kjopernavn">Kjoper Kopern, fødselsnummer 010191 12345</v-field>, "Kjøper".
+                
+                Selger og Kjøper utgjør Partene i avtalen.
+
+                Kjøper kjøper herved <v-field title="antallaksjer">1</v-field>  aksjer i Seslskapet for NOK <v-field title="belop">100 000.-</v-field> ("Kjøpesummen").
+                
+                Eiendomsretten til aksjene skal overføres den <v-field title="Overdragelsesdato" type="date" format="formatDate">2021-04-30</v-field> ("Overdragelsesdato").
+
+                Selger skal på Overdragelsestidspunktet:
+                <ol>
+                <li>Overføre Aksjene til Kjøper fri for enhver heftelse.</li>
+                <li>Sørge for at Kjøper innføres i <v-field title="Selskapsnavn">Variant AS</v-field> sin aksjeeierbok som eier av aksjene samt at det fra <v-field title="Selskapsnavn">Variant AS</v-field> utstedes aksjebevis i samsvar med aksjeloven § 4-10.</li>
+                <li>fremlegge bekreftelse på at styret i <v-field title="Selskapsnavn">Variant AS</v-field> har godkjent ervervet.</li>
+                </ol>
+                Kjøper skal på Overdragelsestidspunktet:
+                <ol>
+                <li>betale Kjøpesummen til Selger <v-field title="Betalingsplan">
+                    Ved å tillate trekk i kvartalsvis utbetalt bonus, og etter 12 mnd trekk fra lønn på eventuelt utestående restbeløp, til hele kjøpesum er betalt
+                    innbetaling til kontonummer 4213 22 33297 
+                    (fjern det som ikke gjelder)</v-field></li>
+
+                <li>fremlegge signert tiltredele til <v-field title="Selskapsnavn">Variant AS</v-field> sin aksjonæravtale</li>
+                <li>fremlegge begreftelse fra <v-field title="Selskapsnavn">Variant AS</v-field> sitt styre om tiltredelse til aksjonæravtale</li>
+                </ol>
+            </p>
+        </section>
+        <footer class="split split--signatures">
+          <h2>
+            For Selger, <v-field title="SelgerBy">Trondheim</v-field>, den <v-field title="Selgersignertdato" type="date" format="formatDate"
+              >2021-04-30</v-field>
+          </h2>
+          <div>
+            <h3><v-field title="Selger signering navn">Anders Hammervold, Styreleder</v-field></h3>
+          </div>
+        </footer>
+        <footer class="split split--signatures">
+            <h2>
+              For Kjøper, <v-field title="KjøperBy">Trondheim</v-field>, den <v-field title="Kjøpersignertdato" type="date" format="formatDate"
+                >2021-04-30</v-field>
+            </h2>
+            <div>
+              <h3><v-field title="Kjøpe signering navn">Kjøperfornavn Kjøperetternavn</v-field></h3>
+            </div>
+          </footer>
+      </article>
+    </main>
+
+    <!-- Include variable injector script -->
+    <script src="../src/var-injector.js"></script>
+  </body>
+</html>
