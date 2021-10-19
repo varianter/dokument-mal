@@ -42,7 +42,8 @@
         <header>
           <h5 class="addressants-preface">Ansettelsesavtale mellom</h5>
           <h1 class="addressants-header">
-            <strong>Variant AS</strong> <small>Org.nr.: 920 933 408</small>
+            <strong><v-field title="Selskapet">Variant AS</v-field></strong>
+            <small>Org.nr.: <v-field title="Orgnr">920 933 408</v-field></small>
             <span class="bind">og</span>
             <strong><v-field title="Navn">Fornavn Etternavn</v-field></strong>
           </h1>
@@ -54,11 +55,16 @@
           </div>
         </header>
         <section>
-          <h2>Avtale om ansettelse i Variant AS</h2>
+          <h2>
+            Avtale om ansettelse i&nbsp;<v-field title="Selskapet"
+              >Variant AS</v-field
+            >
+          </h2>
           <p>
             <v-field title="Navn">Fornavn Etternavn</v-field> (heretter kalt
             Arbeidstakeren) ansettes som
-            <v-field title="Tittel">midlertidig konsulent</v-field> i Variant AS
+            <v-field title="Tittel">midlertidig konsulent</v-field> i
+            <v-field title="Selskapet">Variant AS</v-field>
             (heretter kalt Variant).
           </p>
           <p>
@@ -101,10 +107,9 @@
         <section>
           <h2>Arbeidssted</h2>
           <p>
-            Arbeidsstedet er Trondheim. Dette enten i kundens lokaler, i
-            Variants lokaler i Thomas Angells gate 10 eller på hjemmekontor,
-            anghengig av hvordan covid-19-situasjonen ser ut når
-            arbeidsforholdet er gjeldende.
+            Arbeidsstedet er <v-field title="Arbeidssted">Trondheim</v-field>.
+            Dette enten i kundens lokaler eller i Variants lokaler i
+            <v-field title="Kontoradresse">Thomas Angells gate 10</v-field>.
           </p>
         </section>
         <section>
@@ -284,9 +289,9 @@
 
         <footer class="split split--signatures">
           <h2>
-            Trondheim, den
+            <v-field title="Signeringgsted">Trondheim</v-field>, den
             <v-field title="Signert dato" type="date" format="formatDate"
-              >2021-10-12</v-field
+              >2021-10-19</v-field
             >
           </h2>
 
