@@ -286,6 +286,7 @@ header hr {
   margin: 0;
 }
 .split > div,
+.split > v-if,
 .split > address {
   margin: var(--type-scale-5) 1rem;
   flex: 1 1 40%;
@@ -297,7 +298,7 @@ header hr {
   text-align: center;
 }
 
-.split--signatures > div {
+.split--signatures > :not(h2) {
   text-align: center;
   border-top: 1px solid #000;
 }
@@ -434,4 +435,12 @@ section:after {
   form {
     display: none;
   }
+}
+
+.hidden {
+  display: none !important;
+}
+
+v-if[data-block] {
+  display: block;
 }
