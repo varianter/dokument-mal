@@ -1,6 +1,6 @@
 function createUiFramework() {
-  const isEvent = k => k.indexOf("on") === 0;
-  const eventName = k => k.substr(2).toLowerCase();
+  const isEvent = (k) => k.indexOf("on") === 0;
+  const eventName = (k) => k.substr(2).toLowerCase();
   function attrs(el, obj) {
     for (let k in obj) {
       if (isEvent(k)) {
@@ -28,7 +28,7 @@ function createUiFramework() {
             obj = {};
           }
           const el = attrs(document.createElement(element), obj);
-          children.forEach(function(i) {
+          children.forEach(function (i) {
             if (typeof i === "string") {
               el.textContent = i;
             } else {
@@ -37,7 +37,7 @@ function createUiFramework() {
           });
           return el;
         };
-      }
+      },
     }
   );
 }
@@ -45,17 +45,17 @@ const ui = createUiFramework();
 const sel = document.querySelector.bind(document);
 const sela = document.querySelectorAll.bind(document);
 
-const modifiers = (function() {
+const modifiers = (function () {
   function formatDate(i) {
     const options = {
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
     };
     return new Date(i).toLocaleDateString("nb-NO", options);
   }
 
-  formatDate.unformat = function(str) {
+  formatDate.unformat = function (str) {
     const d = new Date(translateMonths(str));
     if (isNaN(d.getTime())) return str;
     d.setHours(6);
@@ -66,11 +66,11 @@ const modifiers = (function() {
     formatDate,
     identity(i) {
       return i;
-    }
+    },
   };
 })();
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   insertCss();
   formatInitialValues();
 
@@ -85,7 +85,7 @@ window.addEventListener("load", function() {
 
   const top = container(constructForm(fields, lists, updateUrlBox));
 
-  document.body.addEventListener("click", function(e) {
+  document.body.addEventListener("click", function (e) {
     if (isInContainer(e.target, top)) return;
     top.classList.remove("var-injector--open");
   });
@@ -101,7 +101,7 @@ function getFields() {
   return Array.from(sela("v-field, v-if"));
 }
 function getInputs(els = sela("input, textarea")) {
-  return Array.from(els).filter(i => i.id.indexOf("input-") === 0);
+  return Array.from(els).filter((i) => i.id.indexOf("input-") === 0);
 }
 function getFieldsOfType(selector) {
   return Array.from(
@@ -125,7 +125,7 @@ function getObjectFromFields() {
 
 function setValue(field, value) {
   if (field.nodeName === "V-IF") {
-    field.style.display = value ? "block" : "none";
+    field.classList.toggle("hidden", !value);
   } else {
     const formatter = getFormatter(field);
     field.textContent = formatter(value);
@@ -138,7 +138,7 @@ function formatInitialValues() {
       let val = toBoolean(
         field.hasAttribute("default") ? field.getAttribute("default") : "true"
       );
-      field.style.display = val ? "block" : "none";
+      field.classList.toggle("hidden", !val);
     } else {
       const formatter = getFormatter(field);
       field.textContent = formatter(field.textContent);
@@ -171,15 +171,15 @@ function prefillCustomElementsWithQuery(fields, lists) {
 
 function updateValue(field, value) {
   const title = field.getAttribute("title");
-  getFieldsOfType(title).forEach(function(el) {
+  getFieldsOfType(title).forEach(function (el) {
     setValue(el, value);
   });
 }
 function createRowInserter(parent) {
   const tr = parent.querySelector("tr").cloneNode(true);
-  return function(values) {
+  return function (values) {
     const cloned = tr.cloneNode(true);
-    Array.from(cloned.querySelectorAll(`v-item`)).forEach(function(el) {
+    Array.from(cloned.querySelectorAll(`v-item`)).forEach(function (el) {
       const formatter = getFormatter(el);
       el.textContent = formatter(values[slugify(el.title)]);
     });
@@ -189,10 +189,10 @@ function createRowInserter(parent) {
 
 function updateList(title, values) {
   if (!values) return;
-  getLoopsOfType(title).forEach(function(el) {
+  getLoopsOfType(title).forEach(function (el) {
     const rowInserter = createRowInserter(el);
     emptyNode(el);
-    values.forEach(function(valueSeries) {
+    values.forEach(function (valueSeries) {
       el.appendChild(rowInserter(valueSeries));
     });
   });
@@ -212,8 +212,8 @@ function constructForm(fields, lists, cb) {
     ul([
       ...unique(fields).map(createConstructInputLi(updateInputDecoration)),
       ...constructListsInput(lists, updateListDecoration),
-      createUrlBox()
-    ])
+      createUrlBox(),
+    ]),
   ]);
 }
 
@@ -224,7 +224,7 @@ function createUrlBox() {
     id: "urlbox",
     type: "text",
     value: "",
-    readOnly: true
+    readOnly: true,
   });
 
   return li({ class: "url-box" }, [
@@ -237,20 +237,20 @@ function createUrlBox() {
           inputEl.select();
           document.execCommand("copy");
           alert("Kopiert til clipboard"); // Hah! Alert!
-        }
+        },
       },
       ["COPY"]
-    )
+    ),
   ]);
 }
 
 function constructListsInput(lists, update) {
   const { div, input, label, fieldset, legend, ul, li, button } = ui;
 
-  return lists.map(function(list) {
+  return lists.map(function (list) {
     const listTitle = list.getAttribute("data-title");
     const listSlug = slugify(listTitle);
-    const inputLi = children => li({ class: "loop_li" }, children);
+    const inputLi = (children) => li({ class: "loop_li" }, children);
     const updateList = () =>
       update(listTitle, createValuesFromLoop(loopInputs));
 
@@ -266,10 +266,10 @@ function constructListsInput(lists, update) {
               e.stopPropagation();
               el.remove();
               updateList();
-            }
+            },
           },
           ["✗"]
-        )
+        ),
       ]);
       return el;
     }
@@ -290,7 +290,7 @@ function constructListsInput(lists, update) {
         "data-slug": slug,
         onInput() {
           updateList();
-        }
+        },
       };
 
       const el =
@@ -299,7 +299,7 @@ function constructListsInput(lists, update) {
           : input(
               Object.assign({}, opts, {
                 type,
-                value
+                value,
               })
             );
 
@@ -307,11 +307,11 @@ function constructListsInput(lists, update) {
     }
 
     let inputRow = (row, len) => {
-      return Array.from(row.querySelectorAll("v-item")).map(d =>
+      return Array.from(row.querySelectorAll("v-item")).map((d) =>
         createItem(d, len)
       );
     };
-    let items = isFirst => {
+    let items = (isFirst) => {
       const trs = list.querySelectorAll("tr");
       const len = isFirst ? 0 : trs.length;
       return inputRow(trs[0], len);
@@ -330,7 +330,7 @@ function constructListsInput(lists, update) {
 
     const loopInputs = fieldset(
       {
-        class: "loop"
+        class: "loop",
       },
       [
         legend([listTitle]),
@@ -339,10 +339,10 @@ function constructListsInput(lists, update) {
           {
             onClick: newRow,
             type: "button",
-            class: "loop_addRow"
+            class: "loop_addRow",
           },
           ["Nye verdier"]
-        )
+        ),
       ]
     );
     return loopInputs;
@@ -350,7 +350,7 @@ function constructListsInput(lists, update) {
 }
 
 function createValuesFromLoop(fieldset) {
-  return Array.from(fieldset.querySelectorAll("li")).map(function(row) {
+  return Array.from(fieldset.querySelectorAll("li")).map(function (row) {
     const inputs = getInputs(row.querySelectorAll("input, textarea"));
     const obj = {};
     for (let item of inputs) {
@@ -362,7 +362,7 @@ function createValuesFromLoop(fieldset) {
 
 function createConstructInputLi(cb) {
   const { li, input, textarea, label } = ui;
-  return function(field) {
+  return function (field) {
     const title = field.getAttribute("title");
     const slug = slugify(title);
     const id = "input-" + slug;
@@ -392,7 +392,7 @@ function createConstructInputLi(cb) {
         } else {
           cb(field, e.currentTarget.value);
         }
-      }
+      },
     };
 
     const el =
@@ -401,7 +401,7 @@ function createConstructInputLi(cb) {
         : input(
             Object.assign({}, opts, {
               type,
-              value
+              value,
             })
           );
 
@@ -436,16 +436,16 @@ function container(form) {
         class: "toggleButton",
         onClick() {
           el.classList.toggle("var-injector--open");
-        }
+        },
       },
       [
         img({
           src: "../assets/edit.svg",
-          alt: title
-        })
+          alt: title,
+        }),
       ]
     ),
-    form
+    form,
   ]);
   return el;
 }
@@ -456,7 +456,7 @@ function insertCss() {
     link({
       type: "text/css",
       rel: "stylesheet",
-      href: "../src/inject-style.css"
+      href: "../src/inject-style.css",
     })
   );
 }
@@ -466,7 +466,7 @@ function createLogo() {
   return img({
     alt: "Variant",
     class: "logo",
-    src: "../assets/logo-bw.svg"
+    src: "../assets/logo-bw.svg",
   });
 }
 
@@ -480,7 +480,7 @@ function updateUrlBox() {
 
 function unique(fields) {
   const visited = [];
-  return fields.reduce(function(acc, item) {
+  return fields.reduce(function (acc, item) {
     if (visited.includes(item.getAttribute("title"))) return acc;
     visited.push(item.getAttribute("title"));
     return acc.concat(item);
@@ -555,7 +555,7 @@ function queryToObject() {
   // normalize from object to array when nested
   for (let key in obj) {
     if (typeof obj[key] !== "object") continue;
-    obj[key] = Object.keys(obj[key]).map(k => obj[key][k]);
+    obj[key] = Object.keys(obj[key]).map((k) => obj[key][k]);
   }
 
   return obj;
@@ -569,7 +569,7 @@ function getPath(key) {
   return {
     base,
     index: parseInt(numS, 10),
-    name
+    name,
   };
 }
 
@@ -592,11 +592,11 @@ const months = [
   ["september", "sep"],
   ["oktober", "oct"],
   ["november", "nov"],
-  ["desember", "dec"]
+  ["desember", "dec"],
 ];
 function translateMonths(str) {
   let lowerCase = str.toLowerCase();
-  months.forEach(function([from, to]) {
+  months.forEach(function ([from, to]) {
     lowerCase = lowerCase.replace(from, to);
   });
   return lowerCase;
