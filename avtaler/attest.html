@@ -47,39 +47,63 @@
 
         <section>
           <p>
-            <strong><v-field title="Navn">Fornavn Etternavn</v-field></strong>, født
-            <v-field title="Fødselsdato" type="date" format="formatDate">1990-01-01</v-field>,
-            har vært ansatt i Variant AS i perioden  <v-field title="Startdato" type="date" format="formatDate">2020-10-20</v-field>
-            til <v-field title="Sluttdato" type="date" format="formatDate">2020-10-20</v-field>.
+            <strong><v-field title="Navn">Fornavn Etternavn</v-field></strong
+            >, født
+            <v-field title="Fødselsdato" type="date" format="formatDate"
+              >1990-01-01</v-field
+            >, har vært ansatt i Variant AS i perioden
+            <v-field title="Startdato" type="date" format="formatDate"
+              >2020-10-20</v-field
+            >
+            til
+            <v-field title="Sluttdato" type="date" format="formatDate"
+              >2020-10-20</v-field
+            >.
           </p>
         </section>
-          <section>
+        <section>
           <p>
-            Variant AS er et IT-konsulentselskap lokalisert i Trondheim. Variant leverer tjenester innen
-            utvikling, design, prosjektledelse og strategi.  Selskapet er tuftet på radikal åpenhet og tillit
-            til ansatte. Selskapets folk blir derfor trent opp til å ta gode avgjørelser basert på at de har
-            all nødvendig kunnskap for å ta avgjørelsen tilgjengelig.
-            </p>
-          </section>
-            <section>
-            <p>
-            <v-field title="Navn">Fornavn Etternavn</v-field> har vært ansatt som <v-field title="Stilling">stilling</v-field> og har
-            jobbet med <v-field title="Arbeidsoppgaver">Kort beskrivelse av arbeidet</v-field>
+            Variant AS er et IT-konsulentselskap lokalisert i Trondheim. Variant
+            leverer tjenester innen utvikling, design, prosjektledelse og
+            strategi. Selskapet er tuftet på radikal åpenhet og tillit til
+            ansatte. Selskapets folk blir derfor trent opp til å ta gode
+            avgjørelser basert på at de har all nødvendig kunnskap for å ta
+            avgjørelsen tilgjengelig.
           </p>
         </section>
-          <section>
+        <section>
           <p>
-            Vi kan gi  <v-field title="Navn">Fornavn Etternavn</v-field> våre beste anbefalinger. Daglig leder
-            Odd Morten Sveås (oms@variant.no) står gjerne som referanse om ønskelig.
+            <v-field title="Navn">Fornavn Etternavn</v-field> har vært ansatt
+            som <v-field title="Stilling">stilling</v-field> og har jobbet med
+            <v-field title="Arbeidsoppgaver"
+              >Kort beskrivelse av arbeidet</v-field
+            >
+          </p>
+        </section>
+        <section>
+          <p>
+            Vi kan gi <v-field title="Navn">Fornavn Etternavn</v-field> våre
+            beste anbefalinger. Odd Morten Sveås (oms@variant.no)
+            <v-if title="Inkluder nærmeste leder" default="false">
+              eller
+              <v-field title="Nærmeste leder">Fornavn Etternavn</v-field>
+              (<v-field title="Nærmeste leder, epost">fe@variant.no</v-field>)
+            </v-if>
+            står gjerne som referanse om ønskelig.
           </p>
         </section>
 
+        <section>
+          <p>
+            <v-field title="Beskrivelse av kollega" type="textarea"></v-field>
+          </p>
+        </section>
 
         <footer class="split split--signatures">
           <h2>
             Trondheim, den
             <v-field title="Signert dato" type="date" format="formatDate"
-              >2020-10-20</v-field
+              >2021-10-20</v-field
             >
           </h2>
 
@@ -87,6 +111,15 @@
             <h3>Odd Morten Sveås</h3>
             <div>Daglig leder</div>
           </div>
+
+          <v-if title="Inkluder nærmeste leder" default="false" data-block>
+            <div>
+              <h3>
+                <v-field title="Nærmeste leder">Fornavn Etternavn</v-field>
+              </h3>
+              <div>Nærmeste leder</div>
+            </div>
+          </v-if>
         </footer>
       </article>
     </main>
