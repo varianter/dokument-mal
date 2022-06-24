@@ -424,6 +424,10 @@ section:after {
     page-break-after: always;
   }
 
+  .signature {
+    page-break-before: always;
+  }
+
   h2,
   h3,
   h4,
