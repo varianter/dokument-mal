@@ -108,7 +108,7 @@ h2 {
   margin-bottom: 0.5em;
 }
 
-h2 > v-field {
+h2 > v-field[title="Selskapet"] {
   display: contents;
 }
 
