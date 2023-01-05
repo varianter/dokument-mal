@@ -108,6 +108,10 @@ h2 {
   margin-bottom: 0.5em;
 }
 
+h2 > v-field {
+  display: contents;
+}
+
 h3 {
   font-size: var(--type-scale-1);
 }
