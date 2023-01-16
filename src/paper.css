@@ -420,10 +420,6 @@ section:after {
     widows: 3;
   }
 
-  h1 {
-    page-break-before: always;
-  }
-
   header {
     page-break-after: always;
   }
