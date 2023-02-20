@@ -72,9 +72,6 @@ h1 {
 h2 {
   font-size: var(--type-scale-6);
 }
-h3 {
-  font-size: var(--type-scale-1);
-}
 
 main {
   margin: 2rem;
