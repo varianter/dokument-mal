@@ -1,9 +1,10 @@
 # Open Source mal og kontrakt fra Variant
 
 Her finner du et sett med dokumentmaler og kontraktmaler vi bruker i Variant og
-som du gjerne kan bruke også! De er helt åpne og lisensiert under MIT lisens.
-Det er ingen krav til attributering, men om dere vil komme innom for en kopp
-kaffe sier vi gjerne ja!
+som du gjerne kan bruke også! De er helt åpne og lisensiert under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)-lisens. _TL;DR:
+Kopier oss gjerne og bruk avtalene som dine egne, men please da, prøv å være med
+på å være åpne dere også!_. Koden er lisensiert som MIT.
 
 ## Dine egne versjoner av avtalene
 
