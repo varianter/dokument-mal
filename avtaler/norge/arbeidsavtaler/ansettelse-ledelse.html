@@ -4,10 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="../src/paper.css" />
-    <title>Variant: Ansettelsesavtale konsernledere</title>
-
-    <link rel="shortcut icon" href="../assets/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="../../../src/paper.css" />
+    <title>Variant: Ansettelsesavtale ledere</title>
+    <link rel="shortcut icon" href="../../../assets/favicon.png" type="image/png" />
 
     <style>
       /* Document specific styling here */
@@ -53,19 +52,16 @@
               ><v-field title="Fødselsnummer">010988 55555</v-field></strong
             >
           </div>
-          <div>
-            Denne avtale erstatter eventuelt tidligere inngåtte avtaler 
-            mellom <v-field title="Navn">Fornavn Etternavn</v-field> og Variant AS eller dets 
-            datterselskaper. 
-          </div>
         </header>
         <section>
           <h2>Avtale om ansettelse i&nbsp;<v-field title="Selskapet">Variant AS</v-field></h2>
           <p>
             <v-field title="Navn">Fornavn Etternavn</v-field> (heretter kalt
             Arbeidstakeren) ansettes som <v-field title="Stilling">CEO</v-field> 
-            for Variants konsern og som ansatt i <v-field title="Selskapet">Variant AS</v-field> (heretter kalt
-            Variant). Ansettelsesforholdet starter
+            i <v-field title="Selskapet">Variant AS</v-field> (heretter kalt
+            Variant). Arbeidstakerens Ansiennitetsnivå settes til
+            <v-field title="Ansiennitet" type="number">2018</v-field>.
+            Ansettelsesforholdet starter
             <v-field title="Startdato" type="date" format="formatDate">2019-09-01</v-field
             >.
           </p>
@@ -125,7 +121,7 @@
         <section>
           <h2>Arbeidssted</h2>
           <p>
-            Arbeidsstedet er <v-field title="Arbeidssted">Trondheim</v-field>, men
+            Arbeidsstedet er <v-field title="Arbeidssted">Trondheim</v-field> og ofte i kundenes lokaler, men
             Arbeidstakeren må være villig til å delta i arbeid som hører inn
             under firmaets virksomhet i et utvidet geografisk område. Noe
             reisevirksomhet må derfor påregnes.
@@ -153,8 +149,8 @@
             lønnsoppgjør pr. 1. januar.
           </p>
           <p>
-            Lønn for konsernledere betemmes ut fra rolle, ansvar og verdi av Variantkonsernet. Ny lønn besluttes av 
-            konsernstyret i løpet av Q4 for påfølgende år. 
+            Lønn for ledere betemmes ut fra rolle, ansvar og verdi av selskapet de leder. Ny lønn besluttes av 
+            selskapets styre i løpet av Q4 for påfølgende år. 
           </p>
           <p>
             Hvordan Variant beregner lønn og lønnsutvikling er beskrevet i
@@ -387,8 +383,8 @@
           </h2>
 
           <div>
-            <h3><v-field title="Signerende leder">Odd Morten Sveås</v-field></h3>
-            <div><v-field title="Signerende leders rolle">Konserndirektør</v-field></div>
+            <h3><v-field title="Signerende leder">Linn Sandvik</v-field></h3>
+            <div><v-field title="Signerende leders rolle">Chief Executive Officer</v-field></div>
           </div>
           <div>
             <h3><v-field title="Navn">Fornavn Etternavn</v-field></h3>
@@ -399,6 +395,6 @@
     </main>
 
     <!-- Include variable injector script -->
-    <script src="../src/var-injector.js"></script>
+    <script src="../../../src/var-injector.js"></script>
   </body>
 </html>

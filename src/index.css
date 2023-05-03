@@ -15,33 +15,50 @@
   --type-scale-4: calc(var(--type-scale) * var(--type-scale-3));
   --type-scale-5: calc(var(--type-scale) * var(--type-scale-4));
 
-  --color-purple: #6200ee;
+  --variant-color-dark-pink: #e61a6b;
+  --variant-color-dark-blue: #423d89;
+  --variant-color-light-blue: #03dac6;
+  --variant-color-light-pink: #ffc4bc;
+  --variant-color-beige: #ede8d7;
+  --variant-color-black: #333333;
+  --variant-color-white: #ffffff;
+}
+
+@font-face {
+  font-family: "Graphik Web";
+  src: url("../assets/fonts/graphik/Graphik-Regular-Web.woff2") format("woff2"),
+    url("../assets/fonts/graphik/Graphik-Regular-Web.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Graphik Web Medium";
+  src: url("../assets/fonts/graphik/Graphik-Medium-Web.woff2") format("woff2"),
+    url("../assets/fonts/graphik/Graphik-Medium-Web.woff") format("woff");
 }
 
 a {
-  color: #33333d;
+  color: var(--variant-color-black);
   text-decoration: none;
-  border-bottom: 2px solid #03dac6;
+  border-bottom: 2px solid var(--variant-color-light-blue);
   transition: border-color 200ms ease-in;
 }
 a:hover {
-  border-color: #ff0166;
+  border-color: var(--variant-color-dark-pink);
 }
 
 html {
-  font-family: "IBM Plex Sans", serif;
-  /* font-size: 137.5%; */
-  font-size: calc(
-    (var(--font-size-min) * 1px) + (var(--font-size-max) - var(--font-size-min)) *
-      (
-        (100vw - (var(--viewport-min) * 1px)) /
-          (var(--viewport-max) - var(--viewport-min))
-      )
-  );
+  font-family: "Graphik Web", sans-serif;
   line-height: 1.45;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   letter-spacing: -0.015em;
+}
+
+body {
+  background-image: url("../assets/avtale.variant.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 *,
@@ -67,6 +84,7 @@ hgroup h2 {
 }
 
 h1 {
+  font-family: "Graphik Web Medium";
   font-size: var(--type-scale-2);
 }
 h2 {
@@ -76,6 +94,10 @@ h2 {
 main {
   margin: 2rem;
   width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 p {
@@ -85,15 +107,111 @@ p {
 
 article a {
   display: block;
-  max-width: 50rem;
   padding: 1rem 2rem;
   box-shadow: 0px 0.5em 1em 4px rgba(155, 155, 155, 0.2);
   margin: 1em 0;
-  color: var(--color-purple, currentColor);
+  color: var(--variant-color-dark-blue, currentColor);
   font-weight: bold;
   transition: text-decoration-color 200ms ease-in;
-  text-decoration-color: #ff0166;
+  text-decoration-color: var(--variant-color-dark-pink);
 }
 article a:hover {
-  text-decoration-color: #03dac6;
+  text-decoration-color: var(--variant-color-light-blue);
+}
+.collapsibleHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--variant-color-dark-blue);
+}
+
+.collapsibleHeaderTitle {
+  flex: 1;
+}
+
+.arrow {
+  border: solid var(--variant-color-black);
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-right: 10px;
+}
+
+.collapsibleButton.active .arrow {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+.collapsibleButton {
+  border: none;
+  background: none;
+}
+
+.collapsibleContent {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: var(--variant-color-white);
+}
+
+.generatedContent {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.country {
+  width: inherit;
+}
+
+.countryRadioButton {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--variant-color-black);
+  vertical-align: middle;
+}
+
+.countryRadioButton.active {
+  background-color: var(--variant-color-dark-blue);
+}
+
+.toggleOption:has(.countryRadioButton.active) {
+  background-color: var(--variant-color-light-blue);
+}
+
+.toggleOption {
+  padding: 1em;
+  border: 1px solid var(--variant-color-black);
+}
+
+.toggleOptionLeft {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.toggleOptionRight {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.countryRadioGroup {
+  display: flex;
+  place-self: flex-end;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-image: url("../assets/avtale.variant.mobil.svg");
+    /* Other mobile-specific styles */
+  }
 }
