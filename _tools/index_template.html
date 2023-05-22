@@ -36,17 +36,17 @@
     <% content %>
   </div>
 </main>
-<% script %>
 <script>
 
-// Get all collapsible buttons
-var coll = document.querySelectorAll(".collapsibleButton");
-// Loop through the buttons and add a click event listener
-for (var i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
+// Get all collapsible headers
+var headers = document.querySelectorAll(".collapsibleHeader");
+
+// Loop through the headers and add a click event listener
+for (var i = 0; i < headers.length; i++) {
+  headers[i].addEventListener("click", function() {
 
     // Toggle the display of the content div
-    const content = this.parentElement.nextElementSibling;
+    const content = this.nextElementSibling;
 
     if (content.style.display === "block") {
       content.style.display = "none";

@@ -47,17 +47,15 @@
     </div>
   
 
-      <div class="collapsibleHeader">
-        <h1 class="collapsibleHeaderLeft">Arbeidsavtaler</h1>
-        <button class="collapsibleButton" aria-label="Arbeidsavtaler utvid/skjul">
-          <span class="arrow"></span>
-        </button>
-      </div>
+      <button class="collapsibleHeader collapsibleButton" aria-label="Arbeidsavtaler utvid/skjul">
+        <h1 class="collapsibleHeaderLeft" id="Arbeidsavtaler">Arbeidsavtaler</h1>
+        <span class="arrow"></span>
+      </button>
       <div class="collapsibleContent" role="region" aria-labelledby="Arbeidsavtaler">
           <div class="collapsibleItem">
             
       <article>
-        <h3><a href="/avtaler/sverige/Arbeidsavtaler/Generellt_Avtal_SWE.html" title="Variant: Avtal om anställning">Variant: Avtal om anställning</a></h3>
+        <h3><a href="/avtaler/sverige/Arbeidsavtaler/Generellt_Avtal_SWE.html" title="Variant: Avtal om anställning">Variant: Avtal om anställning <span class="ml-10px" aria-hidden="true">&#8594;</span></a></h3>
       </article>
     
           </div>
@@ -65,17 +63,17 @@
   
   </div>
 </main>
-
 <script>
 
-// Get all collapsible buttons
-var coll = document.querySelectorAll(".collapsibleButton");
-// Loop through the buttons and add a click event listener
-for (var i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
+// Get all collapsible headers
+var headers = document.querySelectorAll(".collapsibleHeader");
+
+// Loop through the headers and add a click event listener
+for (var i = 0; i < headers.length; i++) {
+  headers[i].addEventListener("click", function() {
 
     // Toggle the display of the content div
-    const content = this.parentElement.nextElementSibling;
+    const content = this.nextElementSibling;
 
     if (content.style.display === "block") {
       content.style.display = "none";

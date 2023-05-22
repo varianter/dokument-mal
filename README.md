@@ -1,10 +1,8 @@
 # Open Source mal og kontrakt fra Variant
 
-Her finner du et sett med dokumentmaler og kontraktmaler vi bruker i Variant og
-som du gjerne kan bruke også! De er helt åpne og lisensiert under
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)-lisens. _TL;DR:
-Kopier oss gjerne og bruk avtalene som dine egne, men please da, prøv å være med
-på å være åpne dere også!_. Koden er lisensiert som MIT.
+Her finner du et sett med dokumentmaler og kontraktmaler vi bruker i Variant og som du gjerne kan bruke også! De er helt åpne og lisensiert under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)-lisens, med unntak av CSS-filen som brukes i dette prosjektet. Vær oppmerksom på at CSS-filen, src/index.css, har fonter lisensiert direkte til oss, og kan derfor ikke brukes uten egen lisens. Hvis du ikke ønsker å bruke de lisensierte fontene, kan du enkelt endre skrifttypen etter dine preferanser.
+
+TL;DR: Kopier oss gjerne og bruk avtalene som dine egne, men please da, prøv å være med på å være åpne dere også! Koden er lisensiert som MIT.
 
 ## Dine egne versjoner av avtalene
 

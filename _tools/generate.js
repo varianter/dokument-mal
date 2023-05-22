@@ -56,19 +56,17 @@ function createCollapsibleLists(documentsByType) {
   Handlebars.registerHelper('createItem', function(item) {
     return new Handlebars.SafeString(`
       <article>
-        <h3><a href="${item.url}" title="${item.title}">${item.title}</a></h3>
+        <h3><a href="${item.url}" title="${item.title}">${item.title} <span class="ml-10px" aria-hidden="true">&#8594;</span></a></h3>
       </article>
     `);
   });
   
   const templateSource = `
     {{#each documentsByType}}
-      <div class="collapsibleHeader">
-        <h1 class="collapsibleHeaderLeft">{{this.type}}</h1>
-        <button class="collapsibleButton" aria-label="{{this.type}} utvid/skjul">
-          <span class="arrow"></span>
-        </button>
-      </div>
+      <button class="collapsibleHeader collapsibleButton" aria-label="{{this.type}} utvid/skjul">
+        <h1 class="collapsibleHeaderLeft" id="{{this.type}}">{{this.type}}</h1>
+        <span class="arrow"></span>
+      </button>
       <div class="collapsibleContent" role="region" aria-labelledby="{{this.type}}">
         {{#each this.items}}
           <div class="collapsibleItem">
@@ -78,9 +76,9 @@ function createCollapsibleLists(documentsByType) {
       </div>
     {{/each}}
   `;
-
+  
   const template = Handlebars.compile(templateSource);
-
+  
   return template({
     documentsByType: documentsByType.entryList().sort(
       ([type1, items1], [type2, items2]) =>
