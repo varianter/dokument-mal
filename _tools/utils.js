@@ -26,3 +26,46 @@ module.exports.save = async function save(file, content) {
   const filename = path.join(__dirname, "..", `${file}.html`);
   return fs.writeFile(filename, content);
 };
+
+module.exports.DefaultListMap = class DefaultListMap {
+  constructor(defaultValue = []) {
+    this.map = new Map();
+    this.defaultValue = defaultValue;
+  }
+
+  get(key) {
+    if (!this.map.has(key)) {
+      this.map.set(key, this.defaultValue.slice());
+    }
+    return this.map.get(key);
+  }
+
+  set(key, value) {
+    this.get(key).push(value);
+  }
+
+  entries() {
+    return this.map.entries();
+  }
+
+  entryList() {
+    return [...this.map.entries()];
+  }
+
+
+  values() {
+    return this.map.values();
+  }
+
+  keys() {
+    return this.map.keys();
+  }
+
+  size() {
+    return this.map.size;
+  }
+
+  clear() {
+    return this.map.clear();
+  }
+}

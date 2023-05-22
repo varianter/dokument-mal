@@ -38,6 +38,7 @@ Og maler kan oppdateres:
 Dette er kun relevant dersom du ønsker å utvide dette prosjektet med nye
 dokumenter eller avtaler.
 
+
 ### Generere `index.html`
 
 **Du må ha [node](https://nodejs.org/) installert for at dette skal fungere.**
@@ -52,11 +53,16 @@ node _tools/generate.js
 ```
 
 ### Opprett ny avtale
+Lag en ny html fil under mappen avtaler/{land}/{type}. Kopier gjerne fra en annen avtale. 
+Du kan også lage nye avtaletyper. Da må du lage en ny mappe under avtaler/{land}. Husk meta.json fil for å spesifisere rekkefølgen og navnet på typen. 
+For at den nye avtalen og eventuelt typen skal vises, så må du generere index.html på nytt, se forrige avsnitt. 
 
-Dette er et hjelpescript for å sette opp en ny avtale. Du kan også bare kopiere
-tidligere avtaler og redigere de om du syns det er enklere.
+
+### Kjøring av prosjeket lokalt
+De relative stiene virker ikke hvis den ikke kjører på en webserver. Gå til mappen for prosjektet og skriv:
 
 ```sh
-# Fra prosjekt root
-node _tools/create.js my-contract "Kontraktsnavn her"
+npm install -g http-server
+http-server
 ```
+nettsiden kjøer da på http://localhost:8080/

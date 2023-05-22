@@ -440,7 +440,7 @@ function container(form) {
       },
       [
         img({
-          src: "../assets/edit.svg",
+          src: "../../../assets/edit.svg",
           alt: title,
         }),
       ]
@@ -456,7 +456,7 @@ function insertCss() {
     link({
       type: "text/css",
       rel: "stylesheet",
-      href: "../src/inject-style.css",
+      href: "../../../src/inject-style.css",
     })
   );
 }
@@ -466,7 +466,7 @@ function createLogo() {
   return img({
     alt: "Variant",
     class: "logo",
-    src: "../assets/logo-bw.svg",
+    src: "../../../assets/logo-bw.svg",
   });
 }
 
