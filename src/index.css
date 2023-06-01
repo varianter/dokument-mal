@@ -1,4 +1,24 @@
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600");
+@import url("//hello.myfonts.net/count/3a95ac");
+
+/**
+ * @license
+ * MyFonts Webfont Build ID 3839404, 2019-11-20T13:52:19-0500
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed webfont(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: Recoleta-Regular by Latinotype
+ * URL: https://www.myfonts.com/fonts/recoleta/latinotype/recoleta/regular/
+ * 
+ * Licensed pageviews: 10,000
+ * /fonts/recoleta copyright: Copyright © 2018 by Jorge Cisterna. All rights reserved.
+ * 
+ * © 2019 MyFonts Inc
+*/
 
 :root {
   --font-size-min: 10;
@@ -25,15 +45,22 @@
 }
 
 @font-face {
+  font-family: 'Recoleta';
+  src: url('../assets/fonts/recoleta/3A95AC_3.0.eot');
+  src: url('../assets/fonts/recoleta/3A95AC_3_0.woff2') format('woff2'),
+  url('../assets/fonts/recoleta/3A95AC_3_0.woff') format('woff'), url('../assets/fonts/recoleta/3A95AC_3_0.ttf') format('truetype');
+
+}
+
+@font-face {
   font-family: "Graphik Web";
   src: url("../assets/fonts/graphik/Graphik-Regular-Web.woff2") format("woff2"),
     url("../assets/fonts/graphik/Graphik-Regular-Web.woff") format("woff");
 }
 
 @font-face {
-  font-family: "Graphik Web Medium";
-  src: url("../assets/fonts/graphik/Graphik-Medium-Web.woff2") format("woff2"),
-    url("../assets/fonts/graphik/Graphik-Medium-Web.woff") format("woff");
+  font-family: "Recoleta-Medium";
+  src: url(../fonts/recoleta-medium.woff) format("truetype");
 }
 
 a {
@@ -49,7 +76,7 @@ a:hover {
 html {
   font-family: "Graphik Web", sans-serif;
   line-height: 1.45;
-  font-size: 16px;
+  font-size: 24px;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   letter-spacing: -0.015em;
@@ -84,7 +111,7 @@ hgroup h2 {
 }
 
 h1 {
-  font-family: "Graphik Web Medium";
+  font-family: "Recoleta";
   font-size: var(--type-scale-2);
 }
 h2 {
@@ -106,14 +133,7 @@ p {
 }
 
 article a {
-  display: block;
-  padding: 1rem 2rem;
-  box-shadow: 0px 0.5em 1em 4px rgba(155, 155, 155, 0.2);
-  margin: 1em 0;
-  color: var(--variant-color-dark-blue, currentColor);
-  font-weight: bold;
-  transition: text-decoration-color 200ms ease-in;
-  text-decoration-color: var(--variant-color-dark-pink);
+  font-size: 20px;
 }
 article a:hover {
   text-decoration-color: var(--variant-color-light-blue);
@@ -124,6 +144,9 @@ article a:hover {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--variant-color-dark-blue);
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .collapsibleHeaderTitle {
@@ -139,21 +162,15 @@ article a:hover {
   -webkit-transform: rotate(45deg);
   margin-right: 10px;
 }
-
-.collapsibleButton.active .arrow {
+.collapsibleHeader.active .arrow {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
-}
-.collapsibleButton {
-  border: none;
-  background: none;
 }
 
 .collapsibleContent {
   padding: 0 18px;
   display: none;
   overflow: hidden;
-  background-color: var(--variant-color-white);
 }
 
 .generatedContent {
@@ -201,6 +218,10 @@ article a:hover {
 .toggleOptionRight {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.ml-10px{
+  margin-left: 10px;
 }
 
 .countryRadioGroup {
