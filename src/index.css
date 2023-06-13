@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600");
-@import url("//hello.myfonts.net/count/3a95ac");
+@import url("https://hello.myfonts.net/count/3a95ac");
 
 /**
  * @license
@@ -45,11 +44,11 @@
 }
 
 @font-face {
-  font-family: 'Recoleta';
-  src: url('../assets/fonts/recoleta/3A95AC_3.0.eot');
-  src: url('../assets/fonts/recoleta/3A95AC_3_0.woff2') format('woff2'),
-  url('../assets/fonts/recoleta/3A95AC_3_0.woff') format('woff'), url('../assets/fonts/recoleta/3A95AC_3_0.ttf') format('truetype');
-
+  font-family: "Recoleta";
+  src: url("../assets/fonts/recoleta/3A95AC_3.0.eot");
+  src: url("../assets/fonts/recoleta/3A95AC_3_0.woff2") format("woff2"),
+    url("../assets/fonts/recoleta/3A95AC_3_0.woff") format("woff"),
+    url("../assets/fonts/recoleta/3A95AC_3_0.ttf") format("truetype");
 }
 
 @font-face {
@@ -80,6 +79,7 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   letter-spacing: -0.015em;
+  color: var(--variant-color-black);
 }
 
 body {
@@ -115,7 +115,8 @@ h1 {
   font-size: var(--type-scale-2);
 }
 h2 {
-  font-size: var(--type-scale-6);
+  font-family: "Recoleta";
+  font-size: var(--type-scale-4);
 }
 
 main {
@@ -147,6 +148,7 @@ article a:hover {
   border: none;
   background: none;
   cursor: pointer;
+  color:var(--variant-color-black);
 }
 
 .collapsibleHeaderTitle {
@@ -220,7 +222,7 @@ article a:hover {
   border-bottom-right-radius: 10px;
 }
 
-.ml-10px{
+.ml-10px {
   margin-left: 10px;
 }
 
@@ -233,6 +235,8 @@ article a:hover {
 @media (max-width: 768px) {
   body {
     background-image: url("../assets/avtale.variant.mobil.svg");
-    /* Other mobile-specific styles */
+  }
+  h2 {
+    font-size: var(--type-scale-0);
   }
 }

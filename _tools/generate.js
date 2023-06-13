@@ -64,7 +64,7 @@ function createCollapsibleLists(documentsByType) {
   const templateSource = `
     {{#each documentsByType}}
       <button class="collapsibleHeader collapsibleButton" aria-label="{{this.type}} utvid/skjul">
-        <h1 class="collapsibleHeaderLeft" id="{{this.type}}">{{this.type}}</h1>
+        <h2 class="collapsibleHeaderLeft" id="{{this.type}}">{{this.type}}</h2>
         <span class="arrow"></span>
       </button>
       <div class="collapsibleContent" role="region" aria-labelledby="{{this.type}}">
