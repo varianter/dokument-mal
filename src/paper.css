@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500%7CIBM+Plex+Serif:400,500");
-
 :root {
   --font-size-min: 10;
   --font-size-max: 20;
@@ -19,8 +17,7 @@
 }
 
 html {
-  font-family: "IBM Plex Sans", sans-serif;
-  /* font-size: 137.5%; */
+  font-family: "BrittiSansVar-Extralight", sans-serif;
   font-size: calc(
     (var(--font-size-min) * 1px) + (var(--font-size-max) - var(--font-size-min)) *
       (

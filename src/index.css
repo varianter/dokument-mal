@@ -19,6 +19,22 @@
  * © 2019 MyFonts Inc
 */
 
+/*
+Font: 		
+Style: 		
+URL: 		https://youworkforthem.com/font/T12190/britti-sans
+Foundry: 	Nois
+Foundry: 	https://youworkforthem.com/designer/1360/nois
+Copyright:	
+Version: 	17
+Created:	June 21, 2023
+License: 	https://www.youworkforthem.com/font-license 
+License: 	The WebFont(s) listed in this document must follow the YouWorkForThem
+			WebFont license rules. All other parties are strictly restricted 
+			from using the WebFonts(s) listed without a purchased license. 
+			All details above must always remain unaltered and visible in your CSS.
+*/
+
 :root {
   --font-size-min: 10;
   --font-size-max: 20;
@@ -60,6 +76,17 @@
 @font-face {
   font-family: "Recoleta-Medium";
   src: url(../fonts/recoleta-medium.woff) format("truetype");
+}
+
+@font-face {
+	font-family: 'BrittiSansVar-Extralight';
+	src: url('../assets/fonts/britti-sans/britti-sans-variable.eot');
+	src: url('../assets/fonts/britti-sans/britti-sans-variable.eot?#iefix') format('embedded-opentype'),
+       url('../assets/fonts/britti-sans/britti-sans-variable.woff2') format('woff2'),
+	     url('../assets/fonts/britti-sans/britti-sans-variable.woff') format('woff'),
+	     url('../assets/fonts/britti-sans/britti-sans-variable.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
 }
 
 a {
@@ -111,11 +138,11 @@ hgroup h2 {
 }
 
 h1 {
-  font-family: "Recoleta";
+  font-family: "BrittiSansVar-Extralight";
   font-size: var(--type-scale-4);
 }
 h2 {
-  font-family: "Recoleta";
+  font-family: "BrittiSansVar-Extralight";
   font-size: var(--type-scale-2);
   margin: 1rem 0 0 0;
 }
